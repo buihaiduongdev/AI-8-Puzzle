@@ -34,7 +34,8 @@ solution_info = {"path": "", "solve_time": 0.0, "display_time": 0.0}
 algorithms = [
     "BFS", "DFS", "IDDFS", "Greedy", "UCS", "A*", "IDA*",
     "Simple HC", "Steepest HC", "Stochastic HC",
-    "Simulated Annealing", "Genetic Algorithm", "BFS Sensorless"
+    "Simulated Annealing", "Genetic Algorithm", "BFS Sensorless",
+    "Backtracking", "CSP Backtracking"
 ]
 dropdown_active = False
 dropdown_rect = pygame.Rect(350, 170, 200, 30)
@@ -42,7 +43,6 @@ dropdown_item_height = 25
 dropdown_item_rects = []
 
 def ve_board(current_state: State, highlighted_tile_index: Optional[int] = None):
-    """Vẽ bảng 8-puzzle lên màn hình."""
     board_offset_x, board_offset_y = 20, 20
     tile_size = 100
     for i in range(3):
@@ -66,18 +66,19 @@ def ve_board(current_state: State, highlighted_tile_index: Optional[int] = None)
                 s.blit(text_surface, text_rect)
 
 def ve_ui(info: dict):
-    """Vẽ các thành phần giao diện người dùng (thông tin, dropdown)."""
     global dropdown_item_rects
     dropdown_item_rects = [] 
 
     info_x, info_y = 350, 20
 
+    # Vẽ thông tin UI
     s.blit(f2.render(f"Start: {d}", True, C_BLACK), (info_x, info_y))
     s.blit(f2.render(f"Goal:  {g}", True, C_BLACK), (info_x, info_y + 30))
     s.blit(f2.render(f"Algorithm: {current_algo}", True, C_BLACK), (info_x, info_y + 60))
     s.blit(f2.render(f"Processing Time: {info['solve_time']:.4f} s", True, C_BLACK), (info_x, info_y + 90))
     s.blit(f2.render(f"Display Time: {info['display_time']:.4f} s", True, C_BLACK), (info_x, info_y + 120))
 
+    # Vẽ dropdown menu
     pygame.draw.rect(s, C_GREEN, dropdown_rect, border_radius=5)
     pygame.draw.rect(s, C_DARK_GRAY, dropdown_rect, 1, border_radius=5) 
     selected_text = current_algo if current_algo != "None" else "Select Algorithm"
@@ -90,18 +91,20 @@ def ve_ui(info: dict):
                     (dropdown_rect.right - 10, dropdown_rect.centery + 3)]
     pygame.draw.polygon(s, C_WHITE, arrow_points)
 
+    # Vẽ các mục trong dropdown menu (nếu đang mở)
     if dropdown_active:
         base_y = dropdown_rect.bottom + 2
         for i, algo_name in enumerate(algorithms):
             item_rect = pygame.Rect(dropdown_rect.left, base_y + i * dropdown_item_height, dropdown_rect.width, dropdown_item_height)
             dropdown_item_rects.append(item_rect) 
 
+            # Kiểm tra nếu chuột đang hover
             if item_rect.collidepoint(pygame.mouse.get_pos()):
-                pygame.draw.rect(s, C_BLUE, item_rect)
+                pygame.draw.rect(s, C_BLUE, item_rect)  # Màu nền khi hover
             else:
-                pygame.draw.rect(s, C_LIGHT_GRAY, item_rect)
+                pygame.draw.rect(s, C_LIGHT_GRAY, item_rect)  # Màu nền mặc định
 
-            pygame.draw.rect(s, C_DARK_GRAY, item_rect, 1) 
+            pygame.draw.rect(s, C_DARK_GRAY, item_rect, 1)  # Viền
             item_text = f_dropdown.render(algo_name, True, C_BLACK)
             s.blit(item_text, (item_rect.x + 5, item_rect.y + 5))
 
@@ -137,10 +140,6 @@ def ve_ui(info: dict):
          s.blit(f2.render(str(path_display), True, C_BLACK), (text_x, text_y))
 
 def ke(x: State) -> List[Tuple[str, State]]:
-    """
-    Tìm các trạng thái kế tiếp hợp lệ từ trạng thái x.
-    Trả về danh sách các tuple (hành động, trạng thái_mới).
-    """
     neighbors = []
     try:
         z = x.index(0) 
@@ -164,9 +163,6 @@ def ke(x: State) -> List[Tuple[str, State]]:
     return neighbors
 
 def heuristic(x: State, goal: State = g) -> int:
-    """
-    Tính khoảng cách Manhattan heuristic từ trạng thái x đến trạng thái đích.
-    """
     dist = 0
     for i, val in enumerate(x):
         if val != 0: 
@@ -182,7 +178,6 @@ def heuristic(x: State, goal: State = g) -> int:
     return dist
 
 def bfs(start_node: State, goal_node: State) -> Tuple[str, float]:
-    """Breadth-First Search."""
     start_time = time.time()
     queue: Deque[Tuple[str, State]] = deque([("", start_node)])
     visited: Set[State] = {start_node}
@@ -200,7 +195,6 @@ def bfs(start_node: State, goal_node: State) -> Tuple[str, float]:
     return "No Solution", time.time() - start_time
 
 def dfs(start_node: State, goal_node: State, max_depth: int = 30) -> Tuple[str, float]:
-    """Depth-First Search with depth limit."""
     start_time = time.time()
     stack: List[Tuple[str, State, int]] = [("", start_node, 0)] 
     visited: Dict[State, int] = {start_node: 0} 
@@ -224,7 +218,6 @@ def dfs(start_node: State, goal_node: State, max_depth: int = 30) -> Tuple[str, 
     return f"No Solution (depth limit {max_depth}?)", time.time() - start_time
 
 def ucs(start_node: State, goal_node: State) -> Tuple[str, float]:
-    """Uniform Cost Search (equivalent to BFS for unit costs)."""
     start_time = time.time()
 
     priority_queue: List[Tuple[int, str, State]] = [(0, "", start_node)]
@@ -249,11 +242,9 @@ def ucs(start_node: State, goal_node: State) -> Tuple[str, float]:
     return "No Solution", time.time() - start_time
 
 def iddfs(start_node: State, goal_node: State, max_limit: int = 50) -> Tuple[str, float]:
-    """Iterative Deepening Depth-First Search."""
     start_time = time.time()
 
     def dls(path: str, current_state: State, nodes_in_path: List[State], depth_limit: int) -> Optional[str]:
-        """Depth Limited Search helper."""
         if current_state == goal_node:
             return path
         if len(path) >= depth_limit:
@@ -279,7 +270,6 @@ def iddfs(start_node: State, goal_node: State, max_limit: int = 50) -> Tuple[str
     return f"No Solution (within limit {max_limit})", time.time() - start_time
 
 def greedy(start_node: State, goal_node: State) -> Tuple[str, float]:
-    """Greedy Best-First Search (using heuristic)."""
     start_time = time.time()
 
     priority_queue: List[Tuple[int, str, State]] = [(heuristic(start_node, goal_node), "", start_node)]
@@ -300,7 +290,6 @@ def greedy(start_node: State, goal_node: State) -> Tuple[str, float]:
     return "No Solution", time.time() - start_time
 
 def astar(start_node: State, goal_node: State) -> Tuple[str, float]:
-    """A* Search (g_cost + h_cost)."""
     start_time = time.time()
 
     priority_queue: List[Tuple[int, int, str, State]] = [(heuristic(start_node, goal_node), 0, "", start_node)]
@@ -327,7 +316,6 @@ def astar(start_node: State, goal_node: State) -> Tuple[str, float]:
     return "No Solution", time.time() - start_time
 
 def ida_star(start_node: State, goal_node: State) -> Tuple[str, float]:
-    """Iterative Deepening A* Search."""
     start_time = time.time()
     bound = heuristic(start_node, goal_node) 
 
@@ -348,7 +336,6 @@ def ida_star(start_node: State, goal_node: State) -> Tuple[str, float]:
         bound = result
 
 def search_ida(nodes_in_current_path: List[State], current_path_moves: str, g_cost: int, bound: float, goal_node: State) -> Union[str, float]:
-    """Recursive helper for IDA*. Returns path string on success, or minimum exceeding cost."""
     current_state = nodes_in_current_path[-1]
     h_cost = heuristic(current_state, goal_node)
     f_cost = g_cost + h_cost
@@ -379,7 +366,6 @@ def search_ida(nodes_in_current_path: List[State], current_path_moves: str, g_co
     return min_exceeding_cost 
 
 def simple_hill_climbing(start_node: State, goal_node: State, max_iterations: int = 1000) -> Tuple[str, float]:
-    """Simple Hill Climbing: Takes the first better neighbor."""
     start_time = time.time()
     current_state = start_node
     current_h = heuristic(current_state, goal_node)
@@ -408,7 +394,6 @@ def simple_hill_climbing(start_node: State, goal_node: State, max_iterations: in
     return (path if current_state == goal_node else "No Solution (local optimum?)"), time.time() - start_time
 
 def steepest_hill_climbing(start_node: State, goal_node: State, max_iterations: int = 1000) -> Tuple[str, float]:
-    """Steepest Ascent Hill Climbing: Takes the best neighbor."""
     start_time = time.time()
     current_state = start_node
     current_h = heuristic(current_state, goal_node)
@@ -440,7 +425,6 @@ def steepest_hill_climbing(start_node: State, goal_node: State, max_iterations: 
     return (path if current_state == goal_node else "No Solution (local optimum?)"), time.time() - start_time
 
 def stochastic_hill_climbing(start_node: State, goal_node: State, max_iterations: int = 5000) -> Tuple[str, float]:
-    """Stochastic Hill Climbing: Randomly chooses among uphill moves."""
     start_time = time.time()
     current_state = start_node
     current_h = heuristic(current_state, goal_node)
@@ -470,7 +454,6 @@ def stochastic_hill_climbing(start_node: State, goal_node: State, max_iterations
     return (path if current_state == goal_node else "No Solution (local optimum/limit?)"), time.time() - start_time
 
 def simulated_annealing(start_node: State, goal_node: State, initial_temp: float = 100, cooling_rate: float = 0.995, min_temp: float = 0.1, max_iterations: int = 20000) -> Tuple[str, float]:
-    """Simulated Annealing."""
     start_time = time.time()
     current_state = start_node
     current_h = heuristic(current_state, goal_node)
@@ -533,17 +516,14 @@ def simulated_annealing(start_node: State, goal_node: State, initial_temp: float
     return result_path, time.time() - start_time
 
 def genetic_algorithm(start_node: State, goal_node: State, population_size: int = 100, generations: int = 150, mutation_rate: float = 0.15, elite_size: int = 5) -> Tuple[str, float]:
-    """Genetic Algorithm (attempts to find goal state, doesn't guarantee path)."""
     start_time = time.time()
 
     def fitness(state: State, goal: State = goal_node) -> float:
-        """Fitness function: Higher is better. Inverse of heuristic."""
         h = heuristic(state, goal)
 
         return 1.0 / (1.0 + h)
 
     def mutate(state: State) -> State:
-        """Mutate state by making one random valid move."""
         neighbors = ke(state)
         if neighbors:
             _, mutated_state = random.choice(neighbors)
@@ -618,25 +598,13 @@ def genetic_algorithm(start_node: State, goal_node: State, population_size: int 
     return final_message, time.time() - start_time
 
 def bfs_sensorless(initial_belief_state: BeliefState, goal_state: State) -> Tuple[str, float]:
-    """
-    BFS for sensorless problems. Tracks belief states (sets of possible states).
-    Finds a sequence of moves guaranteed to reach the goal from *any* state
-    within the initial belief set.
-
-    :param initial_belief_state: Set of possible initial states (tuples).
-    :param goal_state: The single target goal state (tuple).
-    :return: Path string applicable from any initial state, or "No Solution", and time.
-    """
     start_time = time.time()
 
     if not isinstance(initial_belief_state, set) or not initial_belief_state:
-        print("Error: bfs_sensorless requires a non-empty set of initial states.")
         return "Error: Invalid input set", time.time() - start_time
     if not all(isinstance(s, tuple) and len(s) == 9 for s in initial_belief_state):
-         print("Error: bfs_sensorless initial_belief_state must contain only valid state tuples.")
          return "Error: Invalid states in input set", time.time() - start_time
     if not (isinstance(goal_state, tuple) and len(goal_state) == 9):
-         print("Error: bfs_sensorless requires a valid goal state tuple.")
          return "Error: Invalid goal state", time.time() - start_time
 
     queue: Deque[Tuple[str, BeliefState]] = deque([("", initial_belief_state)])
@@ -677,7 +645,60 @@ def bfs_sensorless(initial_belief_state: BeliefState, goal_state: State) -> Tupl
                 queue.append((path + move, next_belief))
 
     return "No Solution", time.time() - start_time
+def backtracking(start_node: State, goal_node: State, max_depth: int = 1000) -> Tuple[str, float]:
+    """Backtracking algorithm with depth limit."""
+    start_time = time.time()
 
+    stack = [("", start_node, 0)]  # Stack to simulate recursion: (path, current_state, depth)
+    visited = set()
+
+    while stack:
+        path, current_state, depth = stack.pop()
+
+        if depth > max_depth:
+            continue  # Skip if depth exceeds max_depth
+
+        if current_state == goal_node:
+            return path, time.time() - start_time
+
+        if current_state not in visited:
+            visited.add(current_state)
+
+            for move, next_state in ke(current_state):
+                if next_state not in visited:
+                    stack.append((path + move, next_state, depth + 1))
+
+    return "No Solution", time.time() - start_time
+
+
+def csp_backtracking(start_node: State, goal_node: State, max_depth: int = 1000) -> Tuple[str, float]:
+    """CSP Backtracking algorithm with depth limit."""
+    start_time = time.time()
+
+    def is_valid(state: State) -> bool:
+        """Check if a state satisfies the constraints (e.g., valid puzzle state)."""
+        return len(state) == 9 and set(state) == set(range(9))
+
+    stack = [("", start_node, 0)]  # Stack to simulate recursion: (path, current_state, depth)
+    visited = set()
+
+    while stack:
+        path, current_state, depth = stack.pop()
+
+        if depth > max_depth:
+            continue  # Skip if depth exceeds max_depth
+
+        if current_state == goal_node:
+            return path, time.time() - start_time
+
+        if current_state not in visited:
+            visited.add(current_state)
+
+            for move, next_state in ke(current_state):
+                if next_state not in visited and is_valid(next_state):
+                    stack.append((path + move, next_state, depth + 1))
+
+    return "No Solution", time.time() - start_time
 algo_functions = {
     "BFS": bfs,
     "DFS": dfs,
@@ -692,10 +713,11 @@ algo_functions = {
     "Simulated Annealing": simulated_annealing,
     "Genetic Algorithm": genetic_algorithm,
     "BFS Sensorless": bfs_sensorless, 
+     "Backtracking": backtracking,
+    "CSP Backtracking": csp_backtracking,
 }
 
 def run_algorithm(algo_func, algo_name: str):
-    """Runs the selected algorithm and handles visualization."""
     global current_algo, solution_info
     current_algo = algo_name
     print(f"\nRunning Algorithm: {algo_name}") 
