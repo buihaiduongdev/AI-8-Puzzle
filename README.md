@@ -95,28 +95,69 @@ Chương trình hiện thực hóa một loạt các thuật toán tìm kiếm v
 
 ## Minh Họa Hoạt Động
 
-Các ảnh GIF dưới đây minh họa quá trình giải bài toán từ trạng thái `(2, 6, 5, 1, 3, 8, 4, 7, 0)` đến `(1, 2, 3, 4, 5, 6, 7, 8, 0)` bằng một số thuật toán tiêu biểu:
+Các ảnh GIF dưới đây minh họa quá trình giải bài toán từ trạng thái bắt đầu `(2, 6, 5, 1, 3, 8, 4, 7, 0)` đến trạng thái đích `(1, 2, 3, 4, 5, 6, 7, 8, 0)` bằng các thuật toán khác nhau. Lưu ý rằng một số thuật toán (như các biến thể Hill Climbing hoặc Greedy) có thể không tìm ra đường đi tối ưu hoặc có thể bị kẹt.
 
-**Tìm kiếm theo chiều rộng (BFS)**
+**1. Tìm kiếm theo chiều rộng (BFS)**
 *Đảm bảo đường đi ngắn nhất về số bước.*
-![BFS Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/BFS.gif)
+![BFS Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/bfs-ezgif.com-video-to-gif-converter.gif)
 
-**A* (A-Star)**
-*Tìm đường đi tối ưu (ngắn nhất) hiệu quả hơn BFS nhờ sử dụng heuristic.*
-![A* Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/AStar.gif)
+**2. Tìm kiếm theo chiều sâu (DFS)**
+*Ưu tiên đi sâu, đường đi thường không tối ưu, có giới hạn độ sâu.*
+![DFS Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/dfs-ezgif.com-video-to-gif-converter.gif)
 
-**Tìm kiếm Tham lam (Greedy)**
-*Tìm đến đích nhanh nhưng đường đi thường dài hơn BFS/A*.*
-![Greedy Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/Greedy.gif)
+**3. Tìm kiếm sâu dần lặp (IDDFS)**
+*Kết hợp ưu điểm bộ nhớ của DFS và tính tối ưu số bước của BFS.*
+![IDDFS Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/idf-ezgif.com-video-to-gif-converter.gif)
 
-**Leo đồi dốc nhất (Steepest Hill Climbing)**
-*Có thể bị kẹt ở cực tiểu địa phương, không đảm bảo tìm ra lời giải hoặc lời giải tối ưu.*
-![Steepest HC Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/SteepestHC.gif)
+**4. Tìm kiếm Tham lam (Greedy)**
+*Nhanh chóng hướng về đích dựa trên heuristic, đường đi thường không tối ưu.*
+![Greedy Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/gd-ezgif.com-video-to-gif-converter.gif)
 
-**Luyện thép mô phỏng (Simulated Annealing)**
-*Cải tiến của Hill Climbing, có khả năng thoát cực tiểu địa phương.*
-![Simulated Annealing Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/SA.gif)
+**5. Tìm kiếm chi phí thống nhất (UCS)**
+*Tìm đường đi có tổng chi phí (số bước) thấp nhất, tương tự BFS trong trường hợp này.*
+![UCS Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/ucs-ezgif.com-video-to-gif-converter.gif)
 
+**6. A* (A-Star)**
+*Tìm đường đi tối ưu hiệu quả nhờ kết hợp chi phí thực tế và heuristic.*
+![A* Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/as-ezgif.com-video-to-gif-converter.gif)
+
+**7. IDA* (Iterative Deepening A*)**
+*Phiên bản A* tiết kiệm bộ nhớ hơn.*
+![IDA* Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/idas-ezgif.com-video-to-gif-converter.gif)
+
+**8. Leo đồi đơn giản (Simple Hill Climbing)**
+*Di chuyển đến hàng xóm tốt hơn đầu tiên tìm thấy, dễ bị kẹt.*
+![Simple HC Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/sl-ezgif.com-video-to-gif-converter.gif)
+
+**9. Leo đồi dốc nhất (Steepest Hill Climbing)**
+*Di chuyển đến hàng xóm tốt nhất, vẫn có thể bị kẹt.*
+![Steepest HC Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/sthc-ezgif.com-video-to-gif-converter.gif)
+
+**10. Leo đồi ngẫu nhiên (Stochastic Hill Climbing)**
+*Chọn ngẫu nhiên từ các hàng xóm tốt hơn.*
+![Stochastic HC Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/stohc-ezgif.com-video-to-gif-converter.gif)
+
+**11. Luyện thép mô phỏng (Simulated Annealing)**
+*Có khả năng thoát khỏi cực tiểu địa phương bằng cách chấp nhận nước đi xấu hơn.*
+![Simulated Annealing Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/sa-ezgif.com-video-to-gif-converter.gif)
+
+**12. Thuật toán Di truyền (Genetic Algorithm)**
+*Tìm trạng thái đích thông qua tiến hóa, sau đó dùng A* tìm đường đi.*
+![Genetic Algorithm Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/ga-ezgif.com-video-to-gif-converter.gif)
+
+**13. Quay lui (Backtracking)**
+*Tương tự DFS, duyệt sâu và quay lại khi gặp ngõ cụt.*
+![Backtracking Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/bt-ezgif.com-video-to-gif-converter.gif)
+
+**14. Quay lui CSP (CSP Backtracking)**
+*Áp dụng kỹ thuật quay lui trong ngữ cảnh bài toán thỏa mãn ràng buộc.*
+![CSP Backtracking Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/csp-ezgif.com-video-to-gif-converter.gif)
+
+**15. Học tăng cường (Q-Learning)**
+*Học chính sách tối ưu qua nhiều lượt thử và sai (quá trình huấn luyện không hiển thị).*
+![Q-Learning Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/ql-ezgif.com-video-to-gif-converter.gif)
+
+*(Lưu ý: Không có ảnh GIF minh họa riêng cho BFS Sensorless)*
 ## Các Hạn Chế và Hướng Phát Triển
 
 *   **Heuristic:** Hiện tại chỉ sử dụng heuristic khoảng cách Manhattan. Có thể thử nghiệm các heuristic khác (ví dụ: số ô sai vị trí - Misplaced Tiles) hoặc kết hợp heuristic.
