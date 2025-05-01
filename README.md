@@ -128,7 +128,6 @@ Các ảnh GIF dưới đây minh họa quá trình giải bài toán từ trạ
 **8. Leo đồi đơn giản (Simple Hill Climbing)**
 *Di chuyển đến hàng xóm tốt hơn đầu tiên tìm thấy, dễ bị kẹt.*
 ![Simple HC Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/shc-ezgif.com-video-to-gif-converter.gif) 
-*(Tên file gốc trong repo của bạn cho cái này là `shc-...`, tôi giả định đây là Simple HC)*
 
 **9. Leo đồi dốc nhất (Steepest Hill Climbing)**
 *Di chuyển đến hàng xóm tốt nhất, vẫn có thể bị kẹt.*
@@ -149,7 +148,6 @@ Các ảnh GIF dưới đây minh họa quá trình giải bài toán từ trạ
 **13. Tìm kiếm không cảm biến (BFS Sensorless)**
 *Tìm một chuỗi hành động áp dụng được cho nhiều trạng thái cùng lúc.*
 ![BFS Sensorless Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/sl-ezgif.com-video-to-gif-converter.gif) 
-*(Đã gán file `sl-...` cho BFS Sensorless)*
 
 **14. Quay lui (Backtracking)**
 *Tương tự DFS, duyệt sâu và quay lại khi gặp ngõ cụt.*
