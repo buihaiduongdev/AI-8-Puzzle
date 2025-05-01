@@ -127,7 +127,8 @@ Các ảnh GIF dưới đây minh họa quá trình giải bài toán từ trạ
 
 **8. Leo đồi đơn giản (Simple Hill Climbing)**
 *Di chuyển đến hàng xóm tốt hơn đầu tiên tìm thấy, dễ bị kẹt.*
-![Simple HC Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/sl-ezgif.com-video-to-gif-converter.gif)
+![Simple HC Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/shc-ezgif.com-video-to-gif-converter.gif) 
+*(Tên file gốc trong repo của bạn cho cái này là `shc-...`, tôi giả định đây là Simple HC)*
 
 **9. Leo đồi dốc nhất (Steepest Hill Climbing)**
 *Di chuyển đến hàng xóm tốt nhất, vẫn có thể bị kẹt.*
@@ -145,19 +146,22 @@ Các ảnh GIF dưới đây minh họa quá trình giải bài toán từ trạ
 *Tìm trạng thái đích thông qua tiến hóa, sau đó dùng A* tìm đường đi.*
 ![Genetic Algorithm Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/ga-ezgif.com-video-to-gif-converter.gif)
 
-**13. Quay lui (Backtracking)**
+**13. Tìm kiếm không cảm biến (BFS Sensorless)**
+*Tìm một chuỗi hành động áp dụng được cho nhiều trạng thái cùng lúc.*
+![BFS Sensorless Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/sl-ezgif.com-video-to-gif-converter.gif) 
+*(Đã gán file `sl-...` cho BFS Sensorless)*
+
+**14. Quay lui (Backtracking)**
 *Tương tự DFS, duyệt sâu và quay lại khi gặp ngõ cụt.*
 ![Backtracking Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/bt-ezgif.com-video-to-gif-converter.gif)
 
-**14. Quay lui CSP (CSP Backtracking)**
+**15. Quay lui CSP (CSP Backtracking)**
 *Áp dụng kỹ thuật quay lui trong ngữ cảnh bài toán thỏa mãn ràng buộc.*
 ![CSP Backtracking Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/csp-ezgif.com-video-to-gif-converter.gif)
 
-**15. Học tăng cường (Q-Learning)**
+**16. Học tăng cường (Q-Learning)**
 *Học chính sách tối ưu qua nhiều lượt thử và sai (quá trình huấn luyện không hiển thị).*
 ![Q-Learning Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/ql-ezgif.com-video-to-gif-converter.gif)
-
-*(Lưu ý: Không có ảnh GIF minh họa riêng cho BFS Sensorless)*
 ## Các Hạn Chế và Hướng Phát Triển
 
 *   **Heuristic:** Hiện tại chỉ sử dụng heuristic khoảng cách Manhattan. Có thể thử nghiệm các heuristic khác (ví dụ: số ô sai vị trí - Misplaced Tiles) hoặc kết hợp heuristic.
