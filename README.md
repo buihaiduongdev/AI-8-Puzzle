@@ -28,8 +28,8 @@ Chương trình hiện thực hóa một loạt các thuật toán tìm kiếm v
 
 2.  **Tìm kiếm có thông tin (Informed Search):** (Sử dụng Heuristic Khoảng cách Manhattan)
     *   Tìm kiếm Tham lam Tốt nhất đầu tiên (Greedy Best-First Search): Chọn bước đi có vẻ gần đích nhất dựa trên heuristic, không đảm bảo tối ưu.
-    *   A* (A-Star): Kết hợp chi phí đã đi (g) và chi phí ước lượng tới đích (h), đảm bảo tìm đường đi tối ưu nếu heuristic chấp nhận được.
-    *   IDA* (Iterative Deepening A-Star): Phiên bản A* tiết kiệm bộ nhớ hơn, sử dụng ngưỡng chi phí tăng dần.
+    *   A\* (A-Star): Kết hợp chi phí đã đi (g) và chi phí ước lượng tới đích (h), đảm bảo tìm đường đi tối ưu nếu heuristic chấp nhận được.
+    *   IDA\* (Iterative Deepening A-Star): Phiên bản A\* tiết kiệm bộ nhớ hơn, sử dụng ngưỡng chi phí tăng dần.
 
 3.  **Tìm kiếm cục bộ (Local Search):**
     *   Leo đồi đơn giản (Simple Hill Climbing): Chọn bước đi đầu tiên tốt hơn trạng thái hiện tại.
@@ -38,7 +38,7 @@ Chương trình hiện thực hóa một loạt các thuật toán tìm kiếm v
     *   Luyện thép mô phỏng (Simulated Annealing): Cho phép di chuyển đến trạng thái xấu hơn với xác suất giảm dần để thoát khỏi cực tiểu địa phương.
 
 4.  **Thuật toán dựa trên quần thể / Tiến hóa:**
-    *   Thuật toán Di truyền (Genetic Algorithm): Duy trì một quần thể các trạng thái, tiến hóa qua các thế hệ. *Sau khi tìm được trạng thái đích, chương trình sử dụng A* để tìm đường đi cụ thể.*
+    *   Thuật toán Di truyền (Genetic Algorithm): Duy trì một quần thể các trạng thái, tiến hóa qua các thế hệ. *Sau khi tìm được trạng thái đích, chương trình sử dụng A\* để tìm đường đi cụ thể.*
 
 5.  **Các phương pháp khác:**
     *   Quay lui (Backtracking): Tương tự DFS, sử dụng stack để duyệt.
@@ -53,7 +53,7 @@ Chương trình hiện thực hóa một loạt các thuật toán tìm kiếm v
     *   `Pygame`: Dùng để tạo giao diện người dùng đồ họa (GUI), vẽ bảng puzzle, hiển thị thông tin, xử lý sự kiện chuột và tạo animation.
 *   **Thư viện chuẩn Python:**
     *   `time` (đặc biệt là `time.perf_counter` để đo thời gian chính xác)
-    *   `heapq` (cho hàng đợi ưu tiên trong UCS, Greedy, A*)
+    *   `heapq` (cho hàng đợi ưu tiên trong UCS, Greedy, A\*)
     *   `collections.deque` (cho hàng đợi trong BFS, stack trong DFS/Backtracking)
     *   `collections.defaultdict` (cho Q-table trong Q-Learning)
     *   `random` (cho các thuật toán ngẫu nhiên như Hill Climbing, SA, GA, QL)
@@ -117,13 +117,13 @@ Các ảnh GIF dưới đây minh họa quá trình giải bài toán từ trạ
 *Tìm đường đi có tổng chi phí (số bước) thấp nhất, tương tự BFS trong trường hợp này.*
 ![UCS Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/ucs-ezgif.com-video-to-gif-converter.gif)
 
-**6. A* (A-Star)**
+**6. A\* (A-Star)**
 *Tìm đường đi tối ưu hiệu quả nhờ kết hợp chi phí thực tế và heuristic.*
-![A* Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/as-ezgif.com-video-to-gif-converter.gif)
+![A\* Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/as-ezgif.com-video-to-gif-converter.gif)
 
-**7. IDA* (Iterative Deepening A*)**
-*Phiên bản A* tiết kiệm bộ nhớ hơn.*
-![IDA* Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/idas-ezgif.com-video-to-gif-converter.gif)
+**7. IDA\* (Iterative Deepening A\*)**
+*Phiên bản A\* tiết kiệm bộ nhớ hơn.*
+![IDA\* Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/idas-ezgif.com-video-to-gif-converter.gif)
 
 **8. Leo đồi đơn giản (Simple Hill Climbing)**
 *Di chuyển đến hàng xóm tốt hơn đầu tiên tìm thấy, dễ bị kẹt.*
@@ -143,7 +143,7 @@ Các ảnh GIF dưới đây minh họa quá trình giải bài toán từ trạ
 ![Simulated Annealing Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/sa-ezgif.com-video-to-gif-converter.gif)
 
 **12. Thuật toán Di truyền (Genetic Algorithm)**
-*Tìm trạng thái đích thông qua tiến hóa, sau đó dùng A* tìm đường đi.*
+*Tìm trạng thái đích thông qua tiến hóa, sau đó dùng A\* tìm đường đi.*
 ![Genetic Algorithm Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/ga-ezgif.com-video-to-gif-converter.gif)
 
 **13. Tìm kiếm không cảm biến (BFS Sensorless)**
@@ -165,7 +165,7 @@ Các ảnh GIF dưới đây minh họa quá trình giải bài toán từ trạ
 ## Các Hạn Chế và Hướng Phát Triển
 
 *   **Heuristic:** Hiện tại chỉ sử dụng heuristic khoảng cách Manhattan. Có thể thử nghiệm các heuristic khác (ví dụ: số ô sai vị trí - Misplaced Tiles) hoặc kết hợp heuristic.
-*   **Genetic Algorithm:** Việc kết hợp GA với A* để tìm đường đi là một giải pháp phổ biến, nhưng có thể khám phá các cách khác để GA tự lưu trữ hoặc tái tạo lại đường đi. Hiệu quả của GA cũng phụ thuộc nhiều vào việc tinh chỉnh các tham số (kích thước quần thể, tỉ lệ đột biến, lai ghép,...).
+*   **Genetic Algorithm:** Việc kết hợp GA với A\* để tìm đường đi là một giải pháp phổ biến, nhưng có thể khám phá các cách khác để GA tự lưu trữ hoặc tái tạo lại đường đi. Hiệu quả của GA cũng phụ thuộc nhiều vào việc tinh chỉnh các tham số (kích thước quần thể, tỉ lệ đột biến, lai ghép,...).
 *   **Q-Learning:** Hiệu suất phụ thuộc lớn vào việc thiết kế hàm thưởng và các siêu tham số (learning rate, discount factor, exploration rate). Thời gian huấn luyện có thể khá lâu.
 *   **Giao diện người dùng:**
     *   Có thể cho phép người dùng nhập trạng thái bắt đầu và đích tùy chỉnh.
