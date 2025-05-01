@@ -88,14 +88,14 @@ Chương trình hiện thực hóa một loạt các thuật toán tìm kiếm v
 
 2.  **Tương tác với giao diện:**
     *   **Quan sát:** Giao diện chính hiển thị bảng 8-puzzle ở bên trái và khu vực điều khiển/thông tin ở bên phải.
-    *   **Chọn thuật toán:** Nhấp vào hộp màu xanh lá có chữ "Select Algorithm" hoặc tên thuật toán đã chọn trước đó. Một danh sách các thuật toán sẽ hiện ra. Nhấp vào tên thuật toán bạn muốn sử dụng. Tên thuật toán sẽ được cập nhật trên hộp.
-    *   **Bắt đầu giải:** Sau khi đã chọn thuật toán, nhấp vào nút "Start" màu xanh dương.
+    *   **Chọn thuật toán:** Nhấp vào tên thuật toán bạn muốn sử dụng.
+    *   **Bắt đầu giải:** Sau khi đã chọn thuật toán, nhấp vào nút "Start".
     *   **Theo dõi:** Chương trình sẽ bắt đầu chạy thuật toán. Thông tin về thời gian xử lý sẽ được cập nhật. Nếu thuật toán tìm được lời giải, animation các bước di chuyển sẽ được hiển thị trên bảng puzzle.
     *   **Xem kết quả:** Sau khi animation kết thúc (hoặc nếu thuật toán không tìm được lời giải/lỗi), đường đi (chuỗi 'U', 'D', 'L', 'R') hoặc thông báo kết quả sẽ hiển thị trong khu vực "Path:" ở phía dưới. Thời gian xử lý và thời gian hiển thị animation cuối cùng cũng được cập nhật.
 
 ## Minh Họa Hoạt Động
 
-Các ảnh GIF dưới đây minh họa quá trình giải bài toán từ trạng thái bắt đầu `(2, 6, 5, 1, 3, 8, 4, 7, 0)` đến trạng thái đích `(1, 2, 3, 4, 5, 6, 7, 8, 0)` bằng các thuật toán khác nhau. Lưu ý rằng một số thuật toán (như các biến thể Hill Climbing hoặc Greedy) có thể không tìm ra đường đi tối ưu hoặc có thể bị kẹt.
+Các ảnh GIF dưới đây minh họa quá trình giải bài toán từ trạng thái bắt đầu `(2, 6, 5, 1, 3, 8, 4, 7, 0)` đến trạng thái đích `(1, 2, 3, 4, 5, 6, 7, 8, 0)` bằng các thuật toán khác nhau.
 
 **1. Tìm kiếm theo chiều rộng (BFS)**
 *Đảm bảo đường đi ngắn nhất về số bước.*
@@ -165,9 +165,4 @@ Các ảnh GIF dưới đây minh họa quá trình giải bài toán từ trạ
 *   **Heuristic:** Hiện tại chỉ sử dụng heuristic khoảng cách Manhattan. Có thể thử nghiệm các heuristic khác (ví dụ: số ô sai vị trí - Misplaced Tiles) hoặc kết hợp heuristic.
 *   **Genetic Algorithm:** Việc kết hợp GA với A\* để tìm đường đi là một giải pháp phổ biến, nhưng có thể khám phá các cách khác để GA tự lưu trữ hoặc tái tạo lại đường đi. Hiệu quả của GA cũng phụ thuộc nhiều vào việc tinh chỉnh các tham số (kích thước quần thể, tỉ lệ đột biến, lai ghép,...).
 *   **Q-Learning:** Hiệu suất phụ thuộc lớn vào việc thiết kế hàm thưởng và các siêu tham số (learning rate, discount factor, exploration rate). Thời gian huấn luyện có thể khá lâu.
-*   **Giao diện người dùng:**
-    *   Có thể cho phép người dùng nhập trạng thái bắt đầu và đích tùy chỉnh.
-    *   Thêm chức năng tạm dừng/tiếp tục animation.
-    *   Cải thiện cách hiển thị đường đi rất dài (ví dụ: thêm thanh cuộn cho khu vực Path).
-    *   Trực quan hóa các nút đã được khám phá hoặc biên giới tìm kiếm.
 *   **So sánh thuật toán:** Thêm tính năng chạy nhiều thuật toán và so sánh trực tiếp thời gian, số bước, số nút đã duyệt.
