@@ -8,16 +8,16 @@ Dự án này nhằm mục đích triển khai, minh họa và so sánh hiệu s
 
 ## 2. Nội Dung
 **Các thành phần chính của bài toán tìm kiếm 8-Puzzle được định nghĩa như sau:**
-*   **Trạng thái (State):** Một cấu hình cụ thể của bảng 3x3 (thường được biểu diễn dưới dạng tuple hoặc list 9 phần tử, ví dụ: `(2, 6, 5, 1, 3, 8, 4, 7, 0)`).
-*   **Trạng thái ban đầu (Initial State):** Cấu hình bảng lúc bắt đầu (ví dụ: `(2, 6, 5, 1, 3, 8, 4, 7, 0)`).
+*   **Trạng thái (State):** Một cấu hình cụ thể của bảng 3x3.
+*   **Trạng thái ban đầu (Initial State):** Cấu hình bảng lúc bắt đầu (`(2, 6, 5, 1, 3, 8, 4, 7, 0)`).
 *   **Hành động (Actions):** Các hành động có thể thực hiện từ một trạng thái `s`, `ACTIONS(s)`, là di chuyển ô trống ('0') lên (Up - 'U'), xuống (Down - 'D'), trái (Left - 'L'), hoặc phải (Right - 'R') vào vị trí của ô kề cận (nếu hợp lệ).
 *   **Hàm chuyển đổi (Transition Model):** Mô tả trạng thái kết quả `RESULT(s, a)` sau khi thực hiện một hành động `a` từ trạng thái `s`.
 *   **Kiểm tra đích (Goal Test):** Kiểm tra xem trạng thái hiện tại có khớp với trạng thái đích mong muốn `GOAL = (1, 2, 3, 4, 5, 6, 7, 8, 0)` hay không.
-*   **Chi phí đường đi (Path Cost):** Tổng chi phí của các bước đi từ trạng thái ban đầu đến trạng thái hiện tại. Trong bài toán 8-puzzle cơ bản, mỗi bước di chuyển có chi phí là 1.
+*   **Chi phí đường đi (Path Cost):** Tổng chi phí của các bước đi từ trạng thái ban đầu đến trạng thái hiện tại, mỗi bước di chuyển có chi phí là 1.
 *   **Lời giải (Solution):** Một chuỗi các hành động (ví dụ: 'DRUL...') dẫn từ trạng thái ban đầu đến trạng thái đích. Một lời giải tối ưu là lời giải có chi phí đường đi thấp nhất.
-### 2.1 Các Thuật Toán Tìm Kiếm Không Thông Tin (Uninformed Search / Blind Search)
+### 2.1. Các Thuật Toán Tìm Kiếm Không Thông Tin (Uninformed Search)
 
-Các thuật toán này duyệt không gian trạng thái mà không sử dụng bất kỳ thông tin nào về đích đến (ngoại trừ việc kiểm tra xem một trạng thái có phải là đích hay không). Chúng chỉ phân biệt được trạng thái đích và trạng thái không phải đích.
+Các thuật toán này duyệt không gian trạng thái mà không sử dụng bất kỳ thông tin nào về đích đến. Chúng chỉ phân biệt được trạng thái đích và trạng thái không phải đích.
 
 ---
 
@@ -69,7 +69,7 @@ Các thuật toán này duyệt không gian trạng thái mà không sử dụng
 
 ---
 
-### 2.2 Các Thuật Toán Tìm Kiếm Có Thông Tin (Informed Search / Heuristic Search)
+### 2.2. Các Thuật Toán Tìm Kiếm Có Thông Tin (Informed Search / Heuristic Search)
 
 Các thuật toán này sử dụng một hàm heuristic `h(n)` để ước lượng chi phí từ trạng thái hiện tại `n` đến trạng thái đích. Heuristic này cung cấp "thông tin" về đích đến, giúp hướng dẫn tìm kiếm hiệu quả hơn so với tìm kiếm mù quáng. Trong dự án này, heuristic chính được sử dụng là **Khoảng cách Manhattan**: `h(n)` là tổng khoảng cách (tính theo số ô di chuyển ngang và dọc) mà mỗi ô số (từ 1 đến 8) phải di chuyển từ vị trí hiện tại của nó trong trạng thái `n` để về đúng vị trí trong trạng thái đích.
 
@@ -111,21 +111,8 @@ Các thuật toán này sử dụng một hàm heuristic `h(n)` để ước lư
     *   **Độ phức tạp thời gian:** Thường nhanh hơn A* hoặc BFS để tìm ra *một* lời giải (không nhất thiết tối ưu), nhưng độ phức tạp trong trường hợp xấu nhất vẫn có thể là O(b<sup>m</sup>).
     *   **Độ phức tạp không gian (bộ nhớ):** Tương tự thời gian, thường ít hơn A* nhưng trong trường hợp xấu nhất cũng là O(b<sup>m</sup>).
 
----
 
-#### 4. Tìm kiếm Chùm tia Cục bộ (Local Beam Search)
-*   **Mô tả:** Giữ lại `k` trạng thái tốt nhất (theo heuristic `h(n)`) tại mỗi bước duyệt. Bắt đầu với `k` trạng thái (có thể là `k` trạng thái khởi tạo hoặc `k` trạng thái kế tiếp của trạng thái khởi tạo). Từ `k` trạng thái này, sinh ra tất cả các trạng thái kế tiếp của chúng. Sau đó, từ *tất cả* các trạng thái kế tiếp này, chọn ra `k` trạng thái tốt nhất để tiếp tục cho vòng lặp sau. Thuật toán dừng khi một trong `k` trạng thái là trạng thái đích hoặc không thể tạo ra trạng thái tốt hơn.
-*   **Minh họa:**
-    *(Hiện chưa có GIF minh họa cho thuật toán này trong dự án)*
-*   **Nhận xét về hiệu suất (8-Puzzle):**
-    *   **Tính tối ưu:** Không.
-    *   **Tính đầy đủ:** Không. Nếu cả `k` trạng thái hiện tại đều dẫn vào ngõ cụt hoặc cực tiểu địa phương mà không phải đích, thuật toán sẽ thất bại. Nó cũng có thể mất đi sự đa dạng nếu `k` trạng thái tốt nhất tập trung ở một vùng của không gian tìm kiếm.
-    *   **Độ phức tạp thời gian:** Phụ thuộc vào `k` và số lượng trạng thái con sinh ra ở mỗi bước.
-    *   **Độ phức tạp không gian (bộ nhớ):** O(k*b) hoặc O(k), tùy cách cài đặt. Bộ nhớ bị giới hạn bởi `k`, thường thấp hơn các thuật toán duyệt toàn bộ như A* hay BFS. Stochastic Beam Search (chọn `k` trạng thái kế tiếp theo xác suất dựa trên heuristic) có thể tăng tính đa dạng.
-
----
-
-### 2.3 Các Thuật Toán Tìm Kiếm Cục Bộ (Local Search)
+### 2.3. Các Thuật Toán Tìm Kiếm Cục Bộ (Local Search)
 
 Các thuật toán này hoạt động bằng cách duy trì và cải thiện một trạng thái hiện tại duy nhất (hoặc một tập nhỏ các trạng thái như trong GA), thay vì duyệt có hệ thống toàn bộ cây tìm kiếm. Chúng di chuyển từ trạng thái hiện tại đến các trạng thái lân cận, thường dựa trên một hàm mục tiêu (objective function) hoặc hàm đánh giá (heuristic `h(n)` trong trường hợp này, với mục tiêu là tối thiểu hóa `h(n)` về 0). Chúng thường không lưu trữ đường đi đã qua.
 
@@ -199,11 +186,23 @@ Các thuật toán này hoạt động bằng cách duy trì và cải thiện m
 
 ---
 
-### 2.4 Các Thuật Toán Cho Môi Trường Phức Tạp (Complex Environments)
+#### 6. Tìm kiếm Chùm tia Cục bộ (Local Beam Search)
+*   **Mô tả:** Giữ lại `k` trạng thái tốt nhất (theo heuristic `h(n)`) tại mỗi bước duyệt. Bắt đầu với `k` trạng thái (có thể là `k` trạng thái khởi tạo hoặc `k` trạng thái kế tiếp của trạng thái khởi tạo). Từ `k` trạng thái này, sinh ra tất cả các trạng thái kế tiếp của chúng. Sau đó, từ *tất cả* các trạng thái kế tiếp này, chọn ra `k` trạng thái tốt nhất để tiếp tục cho vòng lặp sau. Thuật toán dừng khi một trong `k` trạng thái là trạng thái đích hoặc không thể tạo ra trạng thái tốt hơn.
+*   **Minh họa:**
+    *(Hiện chưa có GIF minh họa cho thuật toán này trong dự án)*
+*   **Nhận xét về hiệu suất (8-Puzzle):**
+    *   **Tính tối ưu:** Không.
+    *   **Tính đầy đủ:** Không. Nếu cả `k` trạng thái hiện tại đều dẫn vào ngõ cụt hoặc cực tiểu địa phương mà không phải đích, thuật toán sẽ thất bại. Nó cũng có thể mất đi sự đa dạng nếu `k` trạng thái tốt nhất tập trung ở một vùng của không gian tìm kiếm.
+    *   **Độ phức tạp thời gian:** Phụ thuộc vào `k` và số lượng trạng thái con sinh ra ở mỗi bước.
+    *   **Độ phức tạp không gian (bộ nhớ):** O(k*b) hoặc O(k), tùy cách cài đặt. Bộ nhớ bị giới hạn bởi `k`, thường thấp hơn các thuật toán duyệt toàn bộ như A* hay BFS. Stochastic Beam Search (chọn `k` trạng thái kế tiếp theo xác suất dựa trên heuristic) có thể tăng tính đa dạng.
+
+---
+
+### 2.4. Các Thuật Toán Cho Môi Trường Phức Tạp (Complex Environments)
 
 Phần này xem xét các tình huống tìm kiếm mà tác tử (agent) không có thông tin đầy đủ về môi trường hoặc trạng thái của chính nó.
 
-#### 1. Tìm kiếm không cảm biến (Sensorless Search / Conformant Problem)
+#### 1. Tìm kiếm không cảm biến (Sensorless Search)
 *   **Mô tả:** Áp dụng khi tác tử không biết chắc chắn trạng thái ban đầu của mình là gì, mà chỉ biết nó thuộc một tập hợp các trạng thái có thể, gọi là **trạng thái niềm tin (belief state)**. Mục tiêu là tìm một **kế hoạch phù hợp (conformant plan)** - một chuỗi hành động duy nhất mà khi thực hiện sẽ chắc chắn dẫn tác tử đến trạng thái đích, bất kể trạng thái ban đầu thực sự là gì trong tập hợp trạng thái niềm tin ban đầu. Việc tìm kiếm diễn ra trong không gian của các trạng thái niềm tin. Một cách phổ biến là áp dụng BFS trên không gian này:
     *   Trạng thái ban đầu là belief state ban đầu.
     *   Hành động `a` áp dụng lên belief state `b` sẽ tạo ra belief state mới chứa tất cả các trạng thái có thể đạt được bằng cách thực hiện `a` từ *bất kỳ* trạng thái nào trong `b`.
@@ -279,7 +278,7 @@ Học tăng cường là một lĩnh vực của học máy, nơi một tác t�
     `Q(s, a) ← Q(s, a) + α [ R + γ max<sub>a'</sub> Q(s', a') - Q(s, a) ]`
     Trong đó: `α` là tốc độ học (learning rate), `γ` là hệ số chiết khấu (discount factor).
     *Lưu ý:* Quá trình huấn luyện (học Q-table) thường diễn ra qua hàng nghìn hoặc hàng triệu lượt tương tác (episodes) và không được hiển thị trong animation. Animation chỉ thể hiện việc *sử dụng* Q-table đã học (chế độ khai thác hoàn toàn) để tìm đường đi từ trạng thái đầu đến đích.
-*   **Minh họa (Sử dụng Q-table đã học để giải):**
+*   **Minh họa:**
     ![Q-Learning Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/ql-ezgif.com-video-to-gif-converter.gif)
 *   **Nhận xét về hiệu suất (8-Puzzle):**
     *   **Tính tối ưu:** Có thể hội tụ đến chính sách tối ưu (dẫn đến đường đi ngắn nhất nếu hàm thưởng được thiết kế phù hợp) nếu các tham số (α, γ, chiến lược thăm dò ε-greedy) được chọn đúng và tác tử được huấn luyện đủ lâu (thăm mọi cặp (s, a) đủ số lần).
