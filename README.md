@@ -176,7 +176,7 @@ Các thuật toán này hoạt động bằng cách duy trì và cải thiện m
     *   Đột biến (Mutation): Thay đổi ngẫu nhiên một phần nhỏ trong cá thể con để duy trì sự đa dạng di truyền.
     Quá trình lặp lại qua nhiều thế hệ, hy vọng quần thể sẽ tiến hóa đến các giải pháp ngày càng tốt hơn.
     *Lưu ý quan trọng:* Trong triển khai của dự án này, GA được sử dụng để tìm ra một trạng thái *đích* (một cá thể có `h(n) = 0`). Sau khi GA tìm thấy trạng thái đích này, thuật toán **A\*** mới được gọi để tìm đường đi cụ thể từ trạng thái ban đầu đến trạng thái đích mà GA đã tìm ra. Bản thân GA không trực tiếp tìm đường đi.
-*   **Minh họa (Hiển thị đường đi tìm bởi A* sau khi GA tìm được trạng thái đích):**
+*   **Minh họa:**
     ![Genetic Algorithm Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/ga-ezgif.com-video-to-gif-converter.gif)
 *   **Nhận xét về hiệu suất (8-Puzzle):**
     *   **Tính tối ưu:** Không. GA không đảm bảo tìm ra trạng thái đích tối ưu (nếu có nhiều) và đường đi tìm được bởi A* sau đó cũng chỉ tối ưu cho trạng thái đích *mà GA tìm được*, không nhất thiết là đường đi tối ưu tổng thể từ trạng thái ban đầu.
@@ -189,7 +189,7 @@ Các thuật toán này hoạt động bằng cách duy trì và cải thiện m
 #### 6. Tìm kiếm Chùm tia Cục bộ (Local Beam Search)
 *   **Mô tả:** Giữ lại `k` trạng thái tốt nhất (theo heuristic `h(n)`) tại mỗi bước duyệt. Bắt đầu với `k` trạng thái (có thể là `k` trạng thái khởi tạo hoặc `k` trạng thái kế tiếp của trạng thái khởi tạo). Từ `k` trạng thái này, sinh ra tất cả các trạng thái kế tiếp của chúng. Sau đó, từ *tất cả* các trạng thái kế tiếp này, chọn ra `k` trạng thái tốt nhất để tiếp tục cho vòng lặp sau. Thuật toán dừng khi một trong `k` trạng thái là trạng thái đích hoặc không thể tạo ra trạng thái tốt hơn.
 *   **Minh họa:**
-    *(Hiện chưa có GIF minh họa cho thuật toán này trong dự án)*
+  ![Local Beam Search Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/lcbeam-ezgif.com-video-to-gif-converter.gif)
 *   **Nhận xét về hiệu suất (8-Puzzle):**
     *   **Tính tối ưu:** Không.
     *   **Tính đầy đủ:** Không. Nếu cả `k` trạng thái hiện tại đều dẫn vào ngõ cụt hoặc cực tiểu địa phương mà không phải đích, thuật toán sẽ thất bại. Nó cũng có thể mất đi sự đa dạng nếu `k` trạng thái tốt nhất tập trung ở một vùng của không gian tìm kiếm.
@@ -291,6 +291,7 @@ Học tăng cường là một lĩnh vực của học máy, nơi một tác t�
 ## 3. So Sánh Hiệu Suất Các Thuật Toán (Tóm tắt)
 
 Bảng dưới đây tóm tắt các đặc tính chính của các thuật toán đã triển khai khi áp dụng cho bài toán 8-puzzle:
+![Algo-Comparision](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/compare_algo.png)
 
 | Thuật Toán                  | Loại                 | Đảm Bảo Tối Ưu (Đường đi ngắn nhất) | Tính Đầy Đủ | Bộ Nhớ Sử Dụng | Tốc Độ Thực Thi (Tìm lời giải) | Ghi Chú                                                          |
 | :-------------------------- | :------------------- | :---------------------------------- | :---------- | :-------------- | :----------------------------- | :--------------------------------------------------------------- |
@@ -310,10 +311,6 @@ Bảng dưới đây tóm tắt các đặc tính chính của các thuật toá
 | **CSP Backtracking**        | CSPs                 | Không                               | Không*      | Thấp            | Chậm                         | Như BT khi áp dụng đơn giản cho tìm đường đi.                    |
 | **Q-Learning***             | Reinforcement Learning| Có (Chính sách tối ưu)             | Có          | Rất cao (Q-table)| Huấn luyện: Rất chậm; Sử dụng: Nhanh | Cần huấn luyện dài, tốn bộ nhớ, nhưng sử dụng nhanh sau huấn luyện. |
 
-**Chú thích bảng:**
-*   `*`: Không đầy đủ nếu không có kiểm tra trạng thái đã thăm / giới hạn độ sâu. Tính đầy đủ của Greedy/Local Search cũng phụ thuộc vào việc có bị kẹt hay không.
-*   `**`: Đảm bảo tối ưu nếu heuristic là chấp nhận được/nhất quán (ví dụ: Manhattan Distance được sử dụng trong dự án này).
-*   `***`: GA và QL trong dự án này có cách tiếp cận hơi khác: GA tìm trạng thái đích rồi dùng A* tìm đường đi. QL học chính sách, sau đó dùng chính sách để tạo đường đi. Tốc độ/Bộ nhớ/Tối ưu phản ánh cả quá trình. Tốc độ thực thi của QL là tốc độ *sau khi* đã huấn luyện.
 
 ---
 

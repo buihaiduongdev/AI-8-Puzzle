@@ -35,7 +35,7 @@ dropdown_active: bool = False
 current_dropdown_item_rects: List[pygame.Rect] = []
 
 def run_algorithm(algo_name: str):
-    """Runs the selected algorithm and handles UI updates/animation."""
+
     global current_algo, solution_info, current_start_state, current_goal_state
 
     if algo_name == "None" or algo_name not in algo_functions:
@@ -164,7 +164,7 @@ def run_algorithm(algo_name: str):
     print(f"Run finished for {algo_name}.")
 
 def compare_algorithms():
-    """Runs all implemented algorithms, records solve times, retrying on failure, and saves to JSON."""
+
     global solution_info, current_algo, current_start_state, current_goal_state
 
     print("\n--- Starting Algorithm Comparison (with retries on failure) ---")
@@ -281,7 +281,7 @@ def compare_algorithms():
     plot_results()
 
 def handle_click(pos: Tuple[int, int]):
-    """Handles mouse clicks for buttons and dropdown."""
+
     global dropdown_active, current_algo, solution_info, current_dropdown_item_rects
 
     if DROPDOWN_RECT.collidepoint(pos):
@@ -343,7 +343,7 @@ def handle_click(pos: Tuple[int, int]):
         return 
 
 def redraw_screen(current_state: Optional[State] = None, highlighted_tile_index: Optional[int] = None):
-    """Clears the screen and redraws all UI elements."""
+
     global current_dropdown_item_rects 
 
     state_to_draw = current_state if current_state else current_start_state

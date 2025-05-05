@@ -3,7 +3,7 @@ import heapq
 from collections import deque, defaultdict
 import random
 import math
-from typing import List, Tuple, Deque, Set, Dict, Optional, Union
+from typing import List, Tuple, Deque, Set, Dict, Optional, Union, Any
 
 State = Tuple[int, ...]
 BeliefState = Set[State]
@@ -13,7 +13,6 @@ d_default: State = (2, 6, 5, 1, 3, 8, 4, 7, 0)
 g: State = (1, 2, 3, 4, 5, 6, 7, 8, 0)        
 
 def ke(x: State) -> List[Tuple[Action, State]]:
-    """Generates neighboring states and the moves to reach them."""
     neighbors = []
     try:
         z = x.index(0)
@@ -34,7 +33,6 @@ def ke(x: State) -> List[Tuple[Action, State]]:
     return neighbors
 
 def heuristic(x: State, goal: State = g) -> int:
-    """Calculates the Manhattan distance heuristic."""
     dist = 0
     for i, val in enumerate(x):
         if val != 0:
@@ -117,7 +115,6 @@ def iddfs(start_node: State, goal_node: State = g, max_limit: int = 50) -> Tuple
     start_time = time.perf_counter()
 
     def dls(path: str, current_state: State, nodes_in_path: List[State], depth_limit: int) -> Optional[str]:
-        """Depth Limited Search helper."""
         if current_state == goal_node:
             return path
         if len(path) >= depth_limit:
@@ -188,7 +185,6 @@ def astar(start_node: State, goal_node: State = g) -> Tuple[Union[str, List[Stat
     return "No Solution", time.perf_counter() - start_time
 
 def search_ida(nodes_in_current_path: List[State], current_path_moves: str, g_cost: int, bound: float, goal_node: State) -> Union[str, float]:
-    """Recursive helper for IDA*."""
     current_state = nodes_in_current_path[-1]
     h_cost = heuristic(current_state, goal_node)
     f_cost = g_cost + h_cost
@@ -320,6 +316,55 @@ def stochastic_hill_climbing(start_node: State, goal_node: State = g, max_iterat
              break 
 
     return (path if current_state == goal_node else "No Solution (local optimum/limit?)"), time.perf_counter() - start_time
+def local_beam_search(start_node: State, goal_node: State = g, k: int = 5, max_iterations: int = 1000) -> Tuple[str, float]:
+    start_time = time.perf_counter()
+
+
+    current_beam: List[Tuple[int, str, State]] = [(heuristic(start_node, goal_node), "", start_node)]
+    best_h_overall = heuristic(start_node, goal_node) # Track best heuristic found
+
+    for iteration in range(max_iterations):
+        # Check if goal is in the current beam
+        for h_val, path, state in current_beam:
+            if state == goal_node:
+                print(f"LBS found goal at iteration {iteration}")
+                return path, time.perf_counter() - start_time
+            best_h_overall = min(best_h_overall, h_val) # Update overall best
+
+        all_successors: List[Tuple[int, str, State]] = []
+        for _, path, current_state in current_beam:
+            for move, next_state in ke(current_state):
+                next_h = heuristic(next_state, goal_node)
+                all_successors.append((next_h, path + move, next_state))
+
+        if not all_successors:
+            print(f"LBS stopped at iteration {iteration}: No successors generated.")
+            break
+
+        all_successors.sort(key=lambda x: x[0])
+
+        next_beam: List[Tuple[int, str, State]] = []
+        added_states_to_next_beam: Set[State] = set()
+        for h, path, state in all_successors:
+            if len(next_beam) < k and state not in added_states_to_next_beam:
+                next_beam.append((h, path, state))
+                added_states_to_next_beam.add(state)
+            if len(next_beam) == k:
+                break
+
+        if not next_beam:
+            print(f"LBS stopped at iteration {iteration}: Next beam is empty.")
+            break 
+        current_best_h_in_beam = next_beam[0][0] # Best heuristic in the new beam
+        if current_best_h_in_beam >= best_h_overall and iteration > 0:
+
+             pass
+
+
+        current_beam = next_beam
+
+    print(f"LBS finished after {max_iterations} iterations or got stuck. Best H={best_h_overall}")
+    return "No Solution (LBS limit/stuck)", time.perf_counter() - start_time
 
 def simulated_annealing(start_node: State, goal_node: State = g, initial_temp: float = 100, cooling_rate: float = 0.995, min_temp: float = 0.1, max_iterations: int = 20000) -> Tuple[str, float]:
     start_time = time.perf_counter()
@@ -383,20 +428,15 @@ def simulated_annealing(start_node: State, goal_node: State = g, initial_temp: f
     return result_path, time.perf_counter() - start_time
 
 def genetic_algorithm(start_node: State, goal_node: State = g, population_size: int = 100, generations: int = 150, mutation_rate: float = 0.15, elite_size: int = 5) -> Tuple[str, float]:
-    """
-    Uses GA to find the goal state, then A* to find the path from start to goal.
-    Returns the A* path and the *total* time (GA + A*).
-    """
+
     ga_start_time = time.perf_counter()
 
     def fitness(state: State, goal: State = goal_node) -> float:
-        """Higher fitness for states closer to the goal (lower heuristic)."""
         h = heuristic(state, goal)
 
         return 1.0 / (1.0 + h)
 
     def mutate(state: State) -> State:
-        """Applies a single random valid move to the state."""
         neighbors = ke(state)
         if neighbors:
 
@@ -544,7 +584,7 @@ def bfs_sensorless(initial_belief_state: BeliefState, goal_state: State = g) -> 
     return "No Solution", time.perf_counter() - start_time
 
 def backtracking(start_node: State, goal_node: State = g, max_depth: int = 30) -> Tuple[str, float]:
-    """Simple backtracking search (essentially DFS)."""
+
     start_time = time.perf_counter()
 
     stack: List[Tuple[str, State, List[State]]] = [("", start_node, [start_node])]
@@ -567,7 +607,7 @@ def backtracking(start_node: State, goal_node: State = g, max_depth: int = 30) -
     return f"No Solution (depth limit {max_depth}?)", time.perf_counter() - start_time
 
 def csp_backtracking(start_node: State, goal_node: State = g, max_depth: int = 30) -> Tuple[str, float]:
-    """CSP Backtracking (Functionally equivalent to Backtracking/DFS for this problem)."""
+
 
     return backtracking(start_node, goal_node, max_depth)
 
@@ -583,7 +623,7 @@ def q_learning(
     max_steps_per_episode: int = 200, 
     max_path_len_solve: int = 100     
 ) -> Tuple[str, float]:
-    """Trains a Q-table and then extracts the policy (path)."""
+
     start_time = time.perf_counter()
     print(f"Starting Q-Learning Training ({episodes} episodes)...")
 
@@ -711,6 +751,7 @@ algo_functions = {
     "Simple HC": simple_hill_climbing,
     "Steepest HC": steepest_hill_climbing,
     "Stochastic HC": stochastic_hill_climbing,
+    "Local Beam Search": local_beam_search,
     "Simulated Annealing": simulated_annealing,
     "Genetic Algorithm": genetic_algorithm,
     "BFS Sensorless": bfs_sensorless,

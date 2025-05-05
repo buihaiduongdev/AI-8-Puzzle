@@ -3,7 +3,7 @@ from typing import List, Tuple, Deque, Set, Dict, Optional, Union
 
 pygame.font.init()
 
-W, H = 600, 700 
+W, H = 600, 800 
 
 C_WHITE = (255, 255, 255)
 C_BLACK = (0, 0, 0)
