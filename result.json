@@ -1,0 +1,114 @@
+{
+    "A*": {
+        "solve_time": 0.000708900000063295,
+        "path_length": 12,
+        "attempts": 1,
+        "final_status": "Success",
+        "last_result_message": null
+    },
+    "BFS": {
+        "solve_time": 0.006635800000367453,
+        "path_length": 12,
+        "attempts": 1,
+        "final_status": "Success",
+        "last_result_message": null
+    },
+    "BFS Sensorless": {
+        "solve_time": 0.033448300000600284,
+        "path_length": 12,
+        "attempts": 1,
+        "final_status": "Success",
+        "last_result_message": null
+    },
+    "Backtracking": {
+        "solve_time": 0.2382697000002736,
+        "path_length": 30,
+        "attempts": 1,
+        "final_status": "Success",
+        "last_result_message": null
+    },
+    "CSP Backtracking": {
+        "solve_time": 0.28782219999993686,
+        "path_length": 30,
+        "attempts": 1,
+        "final_status": "Success",
+        "last_result_message": null
+    },
+    "DFS": {
+        "solve_time": 0.10491769999953249,
+        "path_length": 30,
+        "attempts": 1,
+        "final_status": "Success",
+        "last_result_message": null
+    },
+    "Genetic Algorithm": {
+        "solve_time": 0.0342025999998441,
+        "path_length": 12,
+        "attempts": 1,
+        "final_status": "Success",
+        "last_result_message": null
+    },
+    "Greedy": {
+        "solve_time": 0.002131399999598216,
+        "path_length": 50,
+        "attempts": 1,
+        "final_status": "Success",
+        "last_result_message": null
+    },
+    "IDA*": {
+        "solve_time": 0.0002532999997129082,
+        "path_length": 12,
+        "attempts": 1,
+        "final_status": "Success",
+        "last_result_message": null
+    },
+    "IDDFS": {
+        "solve_time": 0.010596400000395079,
+        "path_length": 12,
+        "attempts": 1,
+        "final_status": "Success",
+        "last_result_message": null
+    },
+    "Q-Learning": {
+        "solve_time": 3.0963799999999537,
+        "path_length": 12,
+        "attempts": 1,
+        "final_status": "Success",
+        "last_result_message": null
+    },
+    "Simple HC": {
+        "solve_time": 0.00044470000011642696,
+        "path_length": 12,
+        "attempts": 1,
+        "final_status": "Success",
+        "last_result_message": null
+    },
+    "Simulated Annealing": {
+        "solve_time": 0.00948450000032608,
+        "path_length": 224,
+        "attempts": 3,
+        "final_status": "Success",
+        "last_result_message": null
+    },
+    "Steepest HC": {
+        "solve_time": 0.00044049999996786937,
+        "path_length": 12,
+        "attempts": 1,
+        "final_status": "Success",
+        "last_result_message": null
+    },
+    "Stochastic HC": {
+        "solve_time": 0.00017550000029586954,
+        "path_length": 12,
+        "attempts": 3,
+        "final_status": "Success",
+        "last_result_message": null
+    },
+    "UCS": {
+        "solve_time": 0.018331999999645632,
+        "path_length": 12,
+        "attempts": 1,
+        "final_status": "Success",
+        "last_result_message": null
+    }
+}
