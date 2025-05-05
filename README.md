@@ -7,11 +7,6 @@ Dự án này nhằm mục đích triển khai, minh họa và so sánh hiệu s
 ---
 
 ## 2. Nội Dung
-
-### 2.1 Các Thuật Toán Tìm Kiếm Không Thông Tin (Uninformed Search / Blind Search)
-
-Các thuật toán này duyệt không gian trạng thái mà không sử dụng bất kỳ thông tin nào về đích đến (ngoại trừ việc kiểm tra xem một trạng thái có phải là đích hay không). Chúng chỉ phân biệt được trạng thái đích và trạng thái không phải đích.
-
 **Các thành phần chính của bài toán tìm kiếm 8-Puzzle được định nghĩa như sau:**
 *   **Trạng thái (State):** Một cấu hình cụ thể của bảng 3x3 (thường được biểu diễn dưới dạng tuple hoặc list 9 phần tử, ví dụ: `(2, 6, 5, 1, 3, 8, 4, 7, 0)`).
 *   **Trạng thái ban đầu (Initial State):** Cấu hình bảng lúc bắt đầu (ví dụ: `(2, 6, 5, 1, 3, 8, 4, 7, 0)`).
@@ -20,6 +15,9 @@ Các thuật toán này duyệt không gian trạng thái mà không sử dụng
 *   **Kiểm tra đích (Goal Test):** Kiểm tra xem trạng thái hiện tại có khớp với trạng thái đích mong muốn `GOAL = (1, 2, 3, 4, 5, 6, 7, 8, 0)` hay không.
 *   **Chi phí đường đi (Path Cost):** Tổng chi phí của các bước đi từ trạng thái ban đầu đến trạng thái hiện tại. Trong bài toán 8-puzzle cơ bản, mỗi bước di chuyển có chi phí là 1.
 *   **Lời giải (Solution):** Một chuỗi các hành động (ví dụ: 'DRUL...') dẫn từ trạng thái ban đầu đến trạng thái đích. Một lời giải tối ưu là lời giải có chi phí đường đi thấp nhất.
+### 2.1 Các Thuật Toán Tìm Kiếm Không Thông Tin (Uninformed Search / Blind Search)
+
+Các thuật toán này duyệt không gian trạng thái mà không sử dụng bất kỳ thông tin nào về đích đến (ngoại trừ việc kiểm tra xem một trạng thái có phải là đích hay không). Chúng chỉ phân biệt được trạng thái đích và trạng thái không phải đích.
 
 ---
 
