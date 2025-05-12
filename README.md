@@ -1,10 +1,7 @@
 # Giải Bài Toán 8-Puzzle Sử Dụng Thuật Toán Tìm Kiếm AI
 
 ## 1. Mục Tiêu
-
-Dự án này nhằm mục đích triển khai, minh họa và so sánh hiệu suất của một loạt các thuật toán tìm kiếm và học máy thuộc lĩnh vực Trí tuệ Nhân tạo (AI) trong việc giải quyết bài toán 8-puzzle kinh điển. Mục tiêu là cung cấp một cái nhìn trực quan và thực tế về cách các thuật toán khác nhau tiếp cận bài toán, đồng thời làm nổi bật ưu và nhược điểm của chúng về tính tối ưu, thời gian thực thi và yêu cầu bộ nhớ. Qua đó, người học có thể hiểu sâu hơn về các nguyên tắc cơ bản của tìm kiếm trong AI.
-
----
+Dự án này triển khai, minh họa và so sánh hiệu suất của các thuật toán tìm kiếm AI trong việc giải bài toán 8-puzzle. Mục tiêu là cung cấp cái nhìn trực quan về cách các thuật toán tiếp cận bài toán, làm nổi bật ưu nhược điểm về tính tối ưu, thời gian thực thi và yêu cầu bộ nhớ, giúp người học hiểu sâu hơn về tìm kiếm trong AI.
 
 ## 2. Nội Dung
 **Các thành phần chính của bài toán tìm kiếm 8-Puzzle được định nghĩa như sau:**
