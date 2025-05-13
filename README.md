@@ -86,9 +86,9 @@ Các thuật toán này sử dụng một hàm heuristic `h(n)` để ước lư
 *   **Minh họa:**
     ![A* Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/as-ezgif.com-video-to-gif-converter.gif)
 *   **Nhận xét về hiệu suất (8-Puzzle):**
-    *   **Tính tối ưu:** Có. A* đảm bảo tìm ra đường đi tối ưu nếu hàm heuristic `h(n)` là **chấp nhận được (admissible)**, nghĩa là `h(n)` không bao giờ đánh giá quá cao chi phí thực tế để đạt đích (luôn ≤ chi phí thực tế). Khoảng cách Manhattan là một heuristic chấp nhận được cho 8-puzzle. Tính tối ưu cũng đòi hỏi `h(n)` **nhất quán (consistent)** hoặc có kiểm tra trạng thái đã thăm khi một nút được tìm thấy lại qua đường đi tốt hơn.
+    *   **Tính tối ưu:** Có. A* đảm bảo tìm ra đường đi tối ưu nếu hàm heuristic `h(n)` là **chấp nhận được (admissible)**. Tính tối ưu cũng đòi hỏi `h(n)` **nhất quán (consistent)**.
     *   **Tính đầy đủ:** Có.
-    *   **Độ phức tạp thời gian:** Phụ thuộc mạnh vào chất lượng của heuristic. Với heuristic tốt, A* có thể hiệu quả hơn nhiều so với các thuật toán không thông tin. Trong trường hợp xấu nhất, nó có thể suy biến thành BFS/UCS.
+    *   **Độ phức tạp thời gian:** Phụ thuộc mạnh vào chất lượng của heuristic. Với heuristic tốt, A* có thể hiệu quả hơn nhiều so với các thuật toán không thông tin.
     *   **Độ phức tạp không gian (bộ nhớ):** Vẫn có thể rất lớn. A* lưu trữ tất cả các nút đã được sinh ra trong bộ nhớ (trong hàng đợi ưu tiên và danh sách đóng). Đây là hạn chế chính của A*.
 
 ---
@@ -107,14 +107,12 @@ Các thuật toán này sử dụng một hàm heuristic `h(n)` để ước lư
 
 ### 2.3. Các Thuật Toán Tìm Kiếm Cục Bộ (Local Search)
 
-Các thuật toán này hoạt động bằng cách duy trì và cải thiện một trạng thái hiện tại duy nhất (hoặc một tập nhỏ các trạng thái như trong GA), thay vì duyệt có hệ thống toàn bộ cây tìm kiếm. Chúng di chuyển từ trạng thái hiện tại đến các trạng thái lân cận, thường dựa trên một hàm mục tiêu (objective function) hoặc hàm đánh giá (heuristic `h(n)` trong trường hợp này, với mục tiêu là tối thiểu hóa `h(n)` về 0). Chúng thường không lưu trữ đường đi đã qua.
-
-**Lời giải (Solution):** Mục tiêu chính là tìm được một trạng thái thỏa mãn điều kiện đích (`h(n)=0`). Bản thân thuật toán thường không cung cấp đường đi từ trạng thái ban đầu đến trạng thái đích đó. Nếu cần đường đi, phải có cơ chế bổ sung (ví dụ: ghi lại các bước di chuyển trong quá trình tìm kiếm, hoặc dùng thuật toán khác như A* để tìm đường đi sau khi đã biết trạng thái đích như trong triển khai GA của dự án này).
+Các thuật toán này hoạt động bằng cách duy trì và cải thiện một trạng thái hiện tại duy nhất, thay vì duyệt có hệ thống toàn bộ cây tìm kiếm. Chúng di chuyển từ trạng thái hiện tại đến các trạng thái lân cận, thường dựa trên một hàm hàm đánh giá (heuristic `h(n)`). Chúng thường không lưu trữ đường đi đã qua.
 
 ---
 
 #### 1. Leo đồi đơn giản (Simple Hill Climbing - HC)
-*   **Mô tả:** Bắt đầu từ trạng thái hiện tại, liên tục di chuyển đến một trạng thái lân cận tốt hơn (có giá trị heuristic `h(n)` thấp hơn). Nó chọn hành động *đầu tiên* dẫn đến trạng thái tốt hơn mà nó tìm thấy. Nếu không có trạng thái lân cận nào tốt hơn trạng thái hiện tại, thuật toán dừng lại.
+*   **Mô tả:** Bắt đầu từ trạng thái hiện tại, liên tục di chuyển đến trạng thái *đầu tiên* tốt hơn mà nó tìm thấy (heuristic `h(n)` thấp hơn). Nếu không có trạng thái lân cận nào tốt hơn trạng thái hiện tại, thuật toán dừng lại.
 *   **Minh họa:**
     ![Simple HC Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/shc-ezgif.com-video-to-gif-converter.gif)
 *   **Nhận xét về hiệu suất (8-Puzzle):**
@@ -139,11 +137,11 @@ Các thuật toán này hoạt động bằng cách duy trì và cải thiện m
 ---
 
 #### 3. Leo đồi ngẫu nhiên (Stochastic Hill Climbing - HC)
-*   **Mô tả:** Chọn ngẫu nhiên một trong số các trạng thái lân cận tốt hơn trạng thái hiện tại. Xác suất chọn có thể đồng đều hoặc phụ thuộc vào mức độ cải thiện (hàng xóm càng tốt thì xác suất được chọn càng cao).
+*   **Mô tả:** Chọn ngẫu nhiên một trong số các trạng thái lân cận tốt hơn trạng thái hiện tại.
 *   **Minh họa:**
     ![Stochastic HC Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/stohc-ezgif.com-video-to-gif-converter.gif)
 *   **Nhận xét về hiệu suất (8-Puzzle):**
-    *   **Tính tối ưu/Đầy đủ:** Không. Vẫn có thể bị kẹt, nhưng tính ngẫu nhiên có thể giúp khám phá các phần khác nhau của sườn dốc so với các phiên bản tất định.
+    *   **Tính tối ưu/Đầy đủ:** Không. Vẫn có thể bị kẹt, nhưng tính ngẫu nhiên có thể giúp khám phá các phần khác nhau của sườn dốc.
     *   **Độ phức tạp thời gian:** Tốc độ thay đổi tùy thuộc vào việc chọn ngẫu nhiên, thường nhanh.
     *   **Độ phức tạp không gian (bộ nhớ):** O(1).
 
@@ -163,12 +161,11 @@ Các thuật toán này hoạt động bằng cách duy trì và cải thiện m
 
 #### 5. Thuật toán Di truyền (Genetic Algorithm - GA)
 *   **Mô tả:** Là một thuật toán tìm kiếm dựa trên quần thể, mô phỏng quá trình chọn lọc tự nhiên và di truyền. Nó duy trì một tập hợp (quần thể - population) các trạng thái (cá thể - individuals). Ở mỗi thế hệ:
-    *   Đánh giá độ thích nghi (fitness) của mỗi cá thể (thường dựa trên heuristic, ví dụ: fitness càng cao khi `h(n)` càng thấp).
+    *   Đánh giá độ thích nghi (fitness) của mỗi cá thể (fitness càng cao khi `h(n)` càng thấp).
     *   Chọn lọc (Selection): Các cá thể có độ thích nghi cao hơn có nhiều khả năng được chọn làm cha mẹ cho thế hệ sau.
     *   Lai ghép (Crossover): Kết hợp vật liệu di truyền (đặc điểm trạng thái) của hai cha mẹ để tạo ra con cái mới.
     *   Đột biến (Mutation): Thay đổi ngẫu nhiên một phần nhỏ trong cá thể con để duy trì sự đa dạng di truyền.
     Quá trình lặp lại qua nhiều thế hệ, hy vọng quần thể sẽ tiến hóa đến các giải pháp ngày càng tốt hơn.
-    *Lưu ý quan trọng:* Trong triển khai của dự án này, GA được sử dụng để tìm ra một trạng thái *đích* (một cá thể có `h(n) = 0`). Sau khi GA tìm thấy trạng thái đích này, thuật toán **A\*** mới được gọi để tìm đường đi cụ thể từ trạng thái ban đầu đến trạng thái đích mà GA đã tìm ra. Bản thân GA không trực tiếp tìm đường đi.
 *   **Minh họa:**
     ![Genetic Algorithm Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/ga-ezgif.com-video-to-gif-converter.gif)
 *   **Nhận xét về hiệu suất (8-Puzzle):**
@@ -180,14 +177,14 @@ Các thuật toán này hoạt động bằng cách duy trì và cải thiện m
 ---
 
 #### 6. Tìm kiếm Chùm tia Cục bộ (Local Beam Search)
-*   **Mô tả:** Giữ lại `k` trạng thái tốt nhất (theo heuristic `h(n)`) tại mỗi bước duyệt. Bắt đầu với `k` trạng thái (có thể là `k` trạng thái khởi tạo hoặc `k` trạng thái kế tiếp của trạng thái khởi tạo). Từ `k` trạng thái này, sinh ra tất cả các trạng thái kế tiếp của chúng. Sau đó, từ *tất cả* các trạng thái kế tiếp này, chọn ra `k` trạng thái tốt nhất để tiếp tục cho vòng lặp sau. Thuật toán dừng khi một trong `k` trạng thái là trạng thái đích hoặc không thể tạo ra trạng thái tốt hơn.
+*   **Mô tả:** Giữ lại `k` trạng thái tốt nhất (theo heuristic `h(n)`) tại mỗi bước duyệt. Từ `k` trạng thái này, sinh ra tất cả các trạng thái kế tiếp của chúng. Sau đó, từ *tất cả* các trạng thái kế tiếp này, chọn ra `k` trạng thái tốt nhất để tiếp tục cho vòng lặp sau. Thuật toán dừng khi một trong `k` trạng thái là trạng thái đích hoặc không thể tạo ra trạng thái tốt hơn.
 *   **Minh họa:**
   ![Local Beam Search Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/lcbeam-ezgif.com-video-to-gif-converter.gif)
 *   **Nhận xét về hiệu suất (8-Puzzle):**
     *   **Tính tối ưu:** Không.
     *   **Tính đầy đủ:** Không. Nếu cả `k` trạng thái hiện tại đều dẫn vào ngõ cụt hoặc cực tiểu địa phương mà không phải đích, thuật toán sẽ thất bại. Nó cũng có thể mất đi sự đa dạng nếu `k` trạng thái tốt nhất tập trung ở một vùng của không gian tìm kiếm.
     *   **Độ phức tạp thời gian:** Phụ thuộc vào `k` và số lượng trạng thái con sinh ra ở mỗi bước.
-    *   **Độ phức tạp không gian (bộ nhớ):** O(k*b) hoặc O(k), tùy cách cài đặt. Bộ nhớ bị giới hạn bởi `k`, thường thấp hơn các thuật toán duyệt toàn bộ như A* hay BFS. Stochastic Beam Search (chọn `k` trạng thái kế tiếp theo xác suất dựa trên heuristic) có thể tăng tính đa dạng.
+    *   **Độ phức tạp không gian (bộ nhớ):** O(k*b) hoặc O(k), tùy cách cài đặt.
 
 ---
 
