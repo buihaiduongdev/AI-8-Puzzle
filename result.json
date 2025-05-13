@@ -1,118 +1,111 @@
 {
     "A*": {
-        "solve_time": 0.00015089999988049385,
+        "solve_time": 0.0006967000008444302,
         "path_length": 12,
         "attempts": 1,
         "final_status": "Success",
         "last_result_message": null
     },
     "BFS": {
-        "solve_time": 0.002152600000044913,
+        "solve_time": 0.008120000002236338,
         "path_length": 12,
         "attempts": 1,
         "final_status": "Success",
         "last_result_message": null
     },
     "BFS Sensorless": {
-        "solve_time": 0.008169200000338606,
+        "solve_time": 0.031125900000915863,
         "path_length": 12,
         "attempts": 1,
         "final_status": "Success",
         "last_result_message": null
     },
     "Backtracking": {
-        "solve_time": 0.09363020000000688,
-        "path_length": 30,
-        "attempts": 1,
-        "final_status": "Success",
-        "last_result_message": null
-    },
-    "CSP Backtracking": {
-        "solve_time": 0.10322519999999713,
+        "solve_time": 0.2996274999968591,
         "path_length": 30,
         "attempts": 1,
         "final_status": "Success",
         "last_result_message": null
     },
     "DFS": {
-        "solve_time": 0.04387190000034025,
+        "solve_time": 0.17013740000038524,
         "path_length": 30,
         "attempts": 1,
         "final_status": "Success",
         "last_result_message": null
     },
     "Genetic Algorithm": {
-        "solve_time": 0.00868850000006205,
+        "solve_time": 0.04084549999606679,
         "path_length": 12,
         "attempts": 1,
         "final_status": "Success",
         "last_result_message": null
     },
     "Greedy": {
-        "solve_time": 0.0006631999999626714,
+        "solve_time": 0.004349599999841303,
         "path_length": 50,
         "attempts": 1,
         "final_status": "Success",
         "last_result_message": null
     },
     "IDA*": {
-        "solve_time": 9.070000032807002e-05,
+        "solve_time": 0.00023040000087348744,
         "path_length": 12,
         "attempts": 1,
         "final_status": "Success",
         "last_result_message": null
     },
     "IDDFS": {
-        "solve_time": 0.0033363000002282206,
+        "solve_time": 0.013600300000689458,
         "path_length": 12,
         "attempts": 1,
         "final_status": "Success",
         "last_result_message": null
     },
     "Local Beam Search": {
-        "solve_time": 0.00048310000011042575,
+        "solve_time": 0.0015428999977302738,
         "path_length": 12,
         "attempts": 1,
         "final_status": "Success",
         "last_result_message": null
     },
     "Q-Learning": {
-        "solve_time": 1.2795139999998355,
+        "solve_time": 4.430314199998975,
         "path_length": 12,
         "attempts": 1,
         "final_status": "Success",
         "last_result_message": null
     },
     "Simple HC": {
-        "solve_time": 8.039999966058531e-05,
+        "solve_time": 0.00024330000087502412,
         "path_length": 12,
-        "attempts": 2,
+        "attempts": 3,
         "final_status": "Success",
         "last_result_message": null
     },
     "Simulated Annealing": {
-        "solve_time": 0.0035003000002689078,
-        "path_length": 244,
+        "solve_time": 0.012729000001854729,
+        "path_length": 196,
         "attempts": 11,
         "final_status": "Success",
         "last_result_message": null
     },
     "Steepest HC": {
-        "solve_time": 8.230000003095483e-05,
+        "solve_time": 0.00035629999911179766,
         "path_length": 12,
         "attempts": 1,
         "final_status": "Success",
         "last_result_message": null
     },
     "Stochastic HC": {
-        "solve_time": 0.00010709999969549244,
+        "solve_time": 0.0004461999997147359,
         "path_length": 12,
-        "attempts": 4,
+        "attempts": 1,
         "final_status": "Success",
         "last_result_message": null
     },
     "UCS": {
-        "solve_time": 0.003998000000137836,
+        "solve_time": 0.017729200000758283,
         "path_length": 12,
         "attempts": 1,
         "final_status": "Success",

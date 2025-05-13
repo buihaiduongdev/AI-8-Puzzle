@@ -606,11 +606,6 @@ def backtracking(start_node: State, goal_node: State = g, max_depth: int = 30) -
 
     return f"No Solution (depth limit {max_depth}?)", time.perf_counter() - start_time
 
-def csp_backtracking(start_node: State, goal_node: State = g, max_depth: int = 30) -> Tuple[str, float]:
-
-
-    return backtracking(start_node, goal_node, max_depth)
-
 def q_learning(
     start_node: State,
     goal_node: State = g,
@@ -756,7 +751,6 @@ algo_functions = {
     "Genetic Algorithm": genetic_algorithm,
     "BFS Sensorless": bfs_sensorless,
     "Backtracking": backtracking,
-    "CSP Backtracking": csp_backtracking, 
     "Q-Learning": q_learning
 }
 
