@@ -193,16 +193,15 @@ Các thuật toán này hoạt động bằng cách duy trì và cải thiện m
 Phần này xem xét các tình huống tìm kiếm mà tác tử (agent) không có thông tin đầy đủ về môi trường hoặc trạng thái của chính nó.
 
 #### 1. Tìm kiếm không cảm biến (Sensorless Search)
-*   **Mô tả:** Áp dụng khi tác tử không biết chắc chắn trạng thái ban đầu của mình là gì, mà chỉ biết nó thuộc một tập hợp các trạng thái có thể, gọi là **trạng thái niềm tin (belief state)**. Mục tiêu là tìm một **kế hoạch phù hợp (conformant plan)** - một chuỗi hành động duy nhất mà khi thực hiện sẽ chắc chắn dẫn tác tử đến trạng thái đích, bất kể trạng thái ban đầu thực sự là gì trong tập hợp trạng thái niềm tin ban đầu. Việc tìm kiếm diễn ra trong không gian của các trạng thái niềm tin. Một cách phổ biến là áp dụng BFS trên không gian này:
+*   **Mô tả:** Áp dụng khi tác tử không biết chắc chắn trạng thái ban đầu của mình là gì, mà chỉ biết nó thuộc một tập hợp các trạng thái có thể, gọi là **trạng thái niềm tin (belief state)**. Mục tiêu là tìm một chuỗi hành động duy nhất mà khi thực hiện sẽ chắc chắn dẫn tác tử đến trạng thái đích, bất kể trạng thái ban đầu thực sự là gì trong tập hợp trạng thái niềm tin ban đầu. Việc tìm kiếm diễn ra trong không gian của các trạng thái niềm tin. Một cách phổ biến là áp dụng BFS trên không gian này:
     *   Trạng thái ban đầu là belief state ban đầu.
     *   Hành động `a` áp dụng lên belief state `b` sẽ tạo ra belief state mới chứa tất cả các trạng thái có thể đạt được bằng cách thực hiện `a` từ *bất kỳ* trạng thái nào trong `b`.
     *   Mục tiêu là đạt được một belief state mà tất cả các trạng thái trong đó đều là trạng thái đích.
-*   **Lời giải (Solution):** Một chuỗi hành động (plan) đảm bảo đạt đích từ bất kỳ trạng thái nào trong belief state ban đầu.
-*   **Minh họa (Áp dụng BFS trên không gian belief state):**
+*   **Minh họa:**
     ![BFS Sensorless Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/sl-ezgif.com-video-to-gif-converter.gif)
 *   **Nhận xét về hiệu suất (8-Puzzle):**
-    *   **Tính tối ưu:** Nếu dùng BFS trên không gian belief state, nó sẽ tìm ra conformant plan ngắn nhất (nếu tồn tại).
-    *   **Tính đầy đủ:** Có. Nếu tồn tại một conformant plan, BFS trên không gian belief state sẽ tìm thấy nó.
+    *   **Tính tối ưu:** Nếu dùng BFS trên không gian belief state, nó sẽ tìm ra chuỗi hành động ngắn nhất.
+    *   **Tính đầy đủ:** Có.
     *   **Độ phức tạp thời gian:** Cực kỳ cao. Số lượng belief state có thể lớn hơn rất nhiều so với số lượng trạng thái vật lý (lên đến 2<sup>N</sup> với N trạng thái vật lý). Tìm kiếm trong không gian này thường rất tốn kém.
     *   **Độ phức tạp không gian (bộ nhớ):** Cực kỳ cao. Phải lưu trữ các belief state trong hàng đợi, mỗi belief state có thể chứa nhiều trạng thái vật lý.
 
@@ -210,15 +209,11 @@ Phần này xem xét các tình huống tìm kiếm mà tác tử (agent) không
 
 ### 2.5 Bài Toán Thỏa Mãn Ràng Buộc (Constraint Satisfaction Problems - CSPs)
 
-Bài toán 8-Puzzle về bản chất là một bài toán tìm kiếm đường đi trong không gian trạng thái. Tuy nhiên, các kỹ thuật giải CSP, đặc biệt là quay lui, cũng có thể được xem xét, mặc dù việc mô hình hóa nó trực tiếp như một CSP tĩnh không phải là cách tiếp cận tự nhiên hay hiệu quả nhất để tìm đường đi. Các thuật toán quay lui là phương pháp nền tảng để giải CSP.
-
+Bài toán 8-Puzzle về bản chất là một bài toán tìm kiếm đường đi trong không gian trạng thái. Tuy nhiên, các kỹ thuật giải CSP, đặc biệt là quay lui, cũng có thể được xem xét.
 **Mô hình hóa (ví dụ, không tối ưu cho tìm đường đi):**
 *   **Biến (Variables):** Vị trí của mỗi ô số, ví dụ: `Pos(Tile1), Pos(Tile2), ..., Pos(Tile8), Pos(Blank)`.
 *   **Miền giá trị (Domains):** Tập 9 ô trên bảng, ví dụ: `{(0,0), (0,1), ..., (2,2)}`.
-*   **Ràng buộc (Constraints):** `AllDifferent(Pos(Tile1), ..., Pos(Blank))`. Có thể thêm ràng buộc về trạng thái đích, nhưng việc diễn tả ràng buộc về *quá trình* di chuyển là phức tạp trong mô hình CSP tĩnh.
-
-**Lời giải (Solution):** Một phép gán giá trị (vị trí) cho tất cả các biến (ô số) sao cho tất cả các ràng buộc được thỏa mãn (tức là đạt được cấu hình đích). Thuật toán quay lui cố gắng xây dựng phép gán này. Khi áp dụng cho bài toán *tìm đường đi* 8-puzzle, các thuật toán quay lui hoạt động tương tự như tìm kiếm theo chiều sâu.
-
+*   **Ràng buộc (Constraints):** `AllDifferent(Pos(Tile1), ..., Pos(Blank))`.
 ---
 
 #### 1. Quay lui (Backtracking - BT)
