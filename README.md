@@ -228,33 +228,9 @@ Bài toán 8-Puzzle về bản chất là một bài toán tìm kiếm đường
 
 ---
 
-#### 2. Quay lui CSP (CSP Backtracking - CSP BT)
-*   **Mô tả:** Áp dụng thuật toán quay lui cơ bản trong khuôn khổ giải bài toán thỏa mãn ràng buộc. Nó gán giá trị cho các biến một cách tuần tự và tại mỗi bước kiểm tra xem phép gán hiện tại có vi phạm ràng buộc nào không. Nếu có vi phạm hoặc không thể gán tiếp, nó quay lui. Khi áp dụng trực tiếp vào việc *tìm đường đi* trong 8-puzzle mà không có các kỹ thuật tăng tốc CSP chuyên dụng (như kiểm tra trước - forward checking, duy trì nhất quán cung - arc consistency, sắp xếp biến/giá trị), hoạt động của nó rất giống với Backtracking thông thường hoặc DFS.
-*   **Minh họa:**
-    ![CSP Backtracking Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/csp-ezgif.com-video-to-gif-converter.gif)
-*   **Nhận xét về hiệu suất (8-Puzzle - khi dùng để tìm đường đi):**
-    *   **Tính tối ưu:** Không.
-    *   **Tính đầy đủ:** Không (tương tự BT/DFS).
-    *   **Độ phức tạp thời gian:** Chậm, O(b<sup>m</sup>).
-    *   **Độ phức tạp không gian (bộ nhớ):** Thấp, O(b*m). Hiệu quả thực sự của cách tiếp cận CSP cho các bài toán phù hợp đến từ việc kết hợp quay lui với các kỹ thuật truyền bá ràng buộc và heuristic, điều này không được thể hiện rõ khi chỉ áp dụng quay lui cơ bản cho bài toán tìm đường đi 8-puzzle.
-
----
-
 ### 2.6 Học Tăng Cường (Reinforcement Learning - RL)
 
 Học tăng cường là một lĩnh vực của học máy, nơi một tác tử (agent) tương tác với một môi trường và học cách hành động thông qua thử và sai để tối đa hóa một tín hiệu phần thưởng (reward) tích lũy theo thời gian.
-
-**Mô hình hóa 8-Puzzle cho RL (trong khuôn khổ Markov Decision Process - MDP):**
-*   **Trạng thái (State - S):** Tập hợp tất cả các cấu hình có thể của bảng 3x3 (khoảng 9!/2 = 181,440 trạng thái).
-*   **Hành động (Action - A):** Tập các hành động có thể thực hiện từ một trạng thái (di chuyển ô trống U, D, L, R, nếu hợp lệ).
-*   **Hàm chuyển đổi (Transition Model - P(s' | s, a)):** Xác suất chuyển đến trạng thái `s'` khi thực hiện hành động `a` tại trạng thái `s`. Trong 8-puzzle, môi trường là tất định, nên P(s' | s, a) = 1 nếu `s'` là kết quả của `a` tại `s`, và bằng 0 nếu khác.
-*   **Hàm phần thưởng (Reward Function - R(s, a, s')):** Phần thưởng nhận được khi chuyển từ `s` đến `s'` bằng hành động `a`. Ví dụ: +100 khi đạt trạng thái đích, -1 cho mỗi bước di chuyển (để khuyến khích đường đi ngắn), -10 nếu thực hiện hành động không hợp lệ.
-*   **Chính sách (Policy - π(s)):** Một hàm ánh xạ từ trạng thái sang hành động, chỉ định hành động mà tác tử nên thực hiện tại mỗi trạng thái. Mục tiêu là học chính sách tối ưu π*.
-*   **Hàm giá trị (Value Function):**
-    *   **V(s):** Giá trị kỳ vọng (tổng phần thưởng chiết khấu trong tương lai) khi bắt đầu từ trạng thái `s` và tuân theo một chính sách π.
-    *   **Q(s, a):** Giá trị kỳ vọng khi thực hiện hành động `a` tại trạng thái `s`, và sau đó tuân theo chính sách π.
-
-**Lời giải (Solution):** Chính sách tối ưu π* chỉ dẫn cách hành động tại mọi trạng thái để tối đa hóa phần thưởng kỳ vọng dài hạn. Khi có π*, tác tử có thể đi từ trạng thái ban đầu đến trạng thái đích bằng cách luôn chọn hành động `a = π*(s)` tại mỗi trạng thái `s`.
 
 ---
 
