@@ -25,19 +25,19 @@ Các thuật toán này duyệt không gian trạng thái mà không sử dụng
 *   **Nhận xét về hiệu suất (8-Puzzle):**
     *   **Tính tối ưu:** Có. BFS đảm bảo tìm ra đường đi ngắn nhất (ít bước di chuyển nhất) vì nó luôn tìm thấy nút đích nông nhất trước.
     *   **Tính đầy đủ:** Có. Nếu có lời giải tồn tại, BFS chắc chắn sẽ tìm thấy nó.
-    *   **Độ phức tạp thời gian:** O(b<sup>d</sup>), trong đó `b` là nhân tố nhánh (số hành động tối đa từ một trạng thái, tối đa là 4) và `d` là độ sâu của lời giải nông nhất. Có thể rất chậm nếu lời giải ở sâu.
+    *   **Độ phức tạp thời gian:** O(b<sup>d</sup>), trong đó `b` là nhân tố nhánh và `d` là độ sâu của lời giải nông nhất. Có thể rất chậm nếu lời giải ở sâu.
     *   **Độ phức tạp không gian (bộ nhớ):** O(b<sup>d</sup>). BFS phải lưu trữ tất cả các nút ở biên giới tìm kiếm trong hàng đợi và các nút đã thăm. Đây là hạn chế lớn nhất của BFS, có thể nhanh chóng cạn kiệt bộ nhớ.
 
 ---
 
 #### 2. Tìm kiếm theo chiều sâu (DFS - Depth-First Search)
-*   **Mô tả:** Luôn mở rộng nút sâu nhất trong số các nút chưa được mở rộng ở biên giới tìm kiếm. Nó đi sâu vào một nhánh cho đến khi gặp nút lá hoặc đạt giới hạn độ sâu được đặt trước, sau đó mới quay lui và khám phá nhánh khác. Sử dụng cấu trúc dữ liệu ngăn xếp (Stack - Last-In, First-Out). Trong dự án này, một giới hạn độ sâu (`max_depth`) được áp dụng để tránh rơi vào các nhánh vô hạn hoặc quá dài.
+*   **Mô tả:** Luôn mở rộng nút sâu nhất trong số các nút chưa được mở rộng. Nó đi sâu vào một nhánh cho đến khi gặp nút sâu nhất, sau đó mới quay lui và khám phá nhánh khác. Sử dụng cấu trúc dữ liệu ngăn xếp (Stack - Last-In, First-Out).
 *   **Minh họa:**
     ![DFS Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/dfs-ezgif.com-video-to-gif-converter.gif)
 *   **Nhận xét về hiệu suất (8-Puzzle):**
     *   **Tính tối ưu:** Không. DFS không đảm bảo tìm ra đường đi ngắn nhất. Nó có thể tìm thấy một lời giải rất dài trước khi tìm thấy lời giải ngắn hơn (nếu có) ở nhánh khác.
-    *   **Tính đầy đủ:** Không (nếu không gian trạng thái vô hạn hoặc có chu trình). Với giới hạn độ sâu `m`, nó chỉ đầy đủ nếu lời giải nông nhất có độ sâu `d <= m`. Nếu không giới hạn độ sâu và không kiểm tra trạng thái đã thăm, nó có thể bị kẹt trong vòng lặp.
-    *   **Độ phức tạp thời gian:** O(b<sup>m</sup>), với `m` là độ sâu tối đa của không gian trạng thái (hoặc giới hạn độ sâu). Có thể nhanh hơn BFS nếu may mắn tìm thấy lời giải sớm, nhưng cũng có thể chậm hơn nhiều nếu lời giải nằm ở nhánh khác hoặc `m` lớn hơn `d` rất nhiều.
+    *   **Tính đầy đủ:** Không. Nếu không giới hạn độ sâu và không kiểm tra trạng thái đã thăm, nó có thể bị kẹt trong vòng lặp.
+    *   **Độ phức tạp thời gian:** O(b<sup>m</sup>), với `m` là độ sâu tối đa của không gian trạng thái. Có thể nhanh hơn BFS nếu may mắn tìm thấy lời giải sớm, nhưng cũng có thể chậm hơn nhiều nếu lời giải nằm ở nhánh khác hoặc `m` lớn hơn `d` rất nhiều.
     *   **Độ phức tạp không gian (bộ nhớ):** O(b*m). Yêu cầu bộ nhớ thấp hơn nhiều so với BFS, chỉ cần lưu trữ đường đi hiện tại và các nút chưa khám phá dọc theo đường đi đó. Đây là ưu điểm chính của DFS.
 
 ---
@@ -49,19 +49,19 @@ Các thuật toán này duyệt không gian trạng thái mà không sử dụng
 *   **Nhận xét về hiệu suất (8-Puzzle):**
     *   **Tính tối ưu:** Có. Giống như BFS, nó sẽ tìm thấy lời giải nông nhất đầu tiên.
     *   **Tính đầy đủ:** Có. Giống như BFS.
-    *   **Độ phức tạp thời gian:** O(b<sup>d</sup>). Mặc dù có vẻ lãng phí khi duyệt lại các nút ở tầng trên nhiều lần, nhưng số nút ở tầng cuối (tầng `d`) thường chiếm phần lớn tổng số nút, nên chi phí duyệt lại không quá đáng kể so với BFS.
-    *   **Độ phức tạp không gian (bộ nhớ):** O(b*d). Giống như DFS, yêu cầu bộ nhớ thấp. IDDFS thường là thuật toán tìm kiếm không thông tin được ưa chuộng khi không gian tìm kiếm lớn và độ sâu lời giải không xác định.
+    *   **Độ phức tạp thời gian:** O(b<sup>d</sup>).
+    *   **Độ phức tạp không gian (bộ nhớ):** O(b*d). Giống như DFS, yêu cầu bộ nhớ thấp.
 
 ---
 
 #### 4. Tìm kiếm chi phí thống nhất (UCS - Uniform Cost Search)
-*   **Mô tả:** Mở rộng nút `n` có chi phí đường đi `g(n)` (chi phí từ nút gốc đến `n`) thấp nhất trong số các nút chưa được mở rộng. Sử dụng hàng đợi ưu tiên (Priority Queue) để quản lý các nút ở biên giới, sắp xếp theo `g(n)`.
+*   **Mô tả:** Mở rộng nút `n` có chi phí đường đi `g(n)` (chi phí từ nút gốc đến `n`) thấp nhất trong số các nút chưa được mở rộng. Sử dụng hàng đợi ưu tiên (Priority Queue).
 *   **Minh họa:**
     ![UCS Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/ucs-ezgif.com-video-to-gif-converter.gif)
 *   **Nhận xét về hiệu suất (8-Puzzle):**
-    *   **Tính tối ưu:** Có. UCS đảm bảo tìm ra đường đi có tổng chi phí thấp nhất. Khi chi phí mỗi bước là như nhau và dương (ví dụ, bằng 1 như trong 8-puzzle), UCS hoạt động giống hệt BFS và tìm ra đường đi ngắn nhất.
-    *   **Tính đầy đủ:** Có (miễn là chi phí mỗi bước lớn hơn một hằng số dương nhỏ ε).
-    *   **Độ phức tạp thời gian:** O(b<sup>1 + floor(C*/ε)</sup>), trong đó C* là chi phí của lời giải tối ưu. Khi chi phí bước là 1 (ε=1) và C*=d, độ phức tạp trở thành O(b<sup>d+1</sup>) hoặc O(b<sup>d</sup>) tùy cách cài đặt, tương đương BFS.
+    *   **Tính tối ưu:** Có. UCS đảm bảo tìm ra đường đi có tổng chi phí thấp nhất. Khi chi phí mỗi bước là như nhau và dương.
+    *   **Tính đầy đủ:** Có.
+    *   **Độ phức tạp thời gian:** O(b<sup>1 + floor(C*/ε)</sup>), trong đó C* là chi phí của lời giải tối ưu. Khi chi phí bước là 1 (ε=1) và C*=d, độ phức tạp trở thành O(b<sup>d+1</sup>) hoặc O(b<sup>d</sup>).
     *   **Độ phức tạp không gian (bộ nhớ):** O(b<sup>1 + floor(C*/ε)</sup>). Tương tự BFS, UCS thường yêu cầu bộ nhớ rất lớn vì phải lưu trữ nhiều nút trong hàng đợi ưu tiên.
 
 ---
@@ -70,11 +70,18 @@ Các thuật toán này duyệt không gian trạng thái mà không sử dụng
 
 Các thuật toán này sử dụng một hàm heuristic `h(n)` để ước lượng chi phí từ trạng thái hiện tại `n` đến trạng thái đích. Heuristic này cung cấp "thông tin" về đích đến, giúp hướng dẫn tìm kiếm hiệu quả hơn so với tìm kiếm mù quáng. Trong dự án này, heuristic chính được sử dụng là **Khoảng cách Manhattan**: `h(n)` là tổng khoảng cách (tính theo số ô di chuyển ngang và dọc) mà mỗi ô số (từ 1 đến 8) phải di chuyển từ vị trí hiện tại của nó trong trạng thái `n` để về đúng vị trí trong trạng thái đích.
 
-**Lời giải (Solution):** Vẫn là một chuỗi các hành động dẫn từ trạng thái ban đầu đến trạng thái đích, thường là lời giải tối ưu (chi phí thấp nhất) nếu thuật toán và heuristic phù hợp.
-
 ---
+#### 1. Tìm kiếm Tham lam Tốt nhất đầu tiên (Greedy Best-First Search)
+*   **Mô tả:** Mở rộng nút `n` có vẻ "hứa hẹn" nhất, tức là nút được đánh giá là gần đích nhất theo hàm heuristic `h(n)`. Nó bỏ qua chi phí đã đi `g(n)` và chỉ cố gắng giảm thiểu `h(n)`. Sử dụng hàng đợi ưu tiên chỉ dựa trên `h(n)`.
+*   **Minh họa:**
+    ![Greedy Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/gd-ezgif.com-video-to-gif-converter.gif)
+*   **Nhận xét về hiệu suất (8-Puzzle):**
+    *   **Tính tối ưu:** Không. Vì bỏ qua `g(n)`, nó có thể đi vào một đường dài mặc dù có vẻ gần đích ở mỗi bước.
+    *   **Tính đầy đủ:** Không. Có thể đi vào vòng lặp nếu không kiểm tra trạng thái đã thăm. Nó cũng có thể bị kẹt và không tìm thấy lời giải ngay cả khi nó tồn tại.
+    *   **Độ phức tạp thời gian:** Thường nhanh hơn A* hoặc BFS để tìm ra *một* lời giải (không nhất thiết tối ưu), nhưng độ phức tạp trong trường hợp xấu nhất vẫn có thể là O(b<sup>m</sup>).
+    *   **Độ phức tạp không gian (bộ nhớ):** Tương tự thời gian, thường ít hơn A* nhưng trong trường hợp xấu nhất cũng là O(b<sup>m</sup>).
 
-#### 1. A* (A-Star Search)
+#### 2. A* (A-Star Search)
 *   **Mô tả:** Kết hợp ưu điểm của UCS (ưu tiên đường đi chi phí thấp `g(n)`) và Greedy Best-First Search (ưu tiên trạng thái gần đích `h(n)`). A* mở rộng nút `n` có giá trị hàm đánh giá `f(n) = g(n) + h(n)` thấp nhất. Nó sử dụng hàng đợi ưu tiên sắp xếp theo `f(n)`.
 *   **Minh họa:**
     ![A* Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/as-ezgif.com-video-to-gif-converter.gif)
@@ -97,17 +104,6 @@ Các thuật toán này sử dụng một hàm heuristic `h(n)` để ước lư
     *   **Độ phức tạp không gian (bộ nhớ):** O(b*d). Giống như IDDFS, IDA* chỉ yêu cầu bộ nhớ tuyến tính theo độ sâu của lời giải. Đây là ưu điểm vượt trội so với A* cho các bài toán có không gian trạng thái rất lớn.
 
 ---
-
-#### 3. Tìm kiếm Tham lam Tốt nhất đầu tiên (Greedy Best-First Search)
-*   **Mô tả:** Mở rộng nút `n` có vẻ "hứa hẹn" nhất, tức là nút được đánh giá là gần đích nhất theo hàm heuristic `h(n)`. Nó bỏ qua chi phí đã đi `g(n)` và chỉ cố gắng giảm thiểu `h(n)`. Sử dụng hàng đợi ưu tiên chỉ dựa trên `h(n)`.
-*   **Minh họa:**
-    ![Greedy Animation](https://raw.githubusercontent.com/buihaiduongdev/project-images/main/AI-Personal-Project/gd-ezgif.com-video-to-gif-converter.gif)
-*   **Nhận xét về hiệu suất (8-Puzzle):**
-    *   **Tính tối ưu:** Không. Vì bỏ qua `g(n)`, nó có thể đi vào một đường dài mặc dù có vẻ gần đích ở mỗi bước.
-    *   **Tính đầy đủ:** Không. Có thể đi vào vòng lặp nếu không kiểm tra trạng thái đã thăm. Nó cũng có thể bị kẹt và không tìm thấy lời giải ngay cả khi nó tồn tại.
-    *   **Độ phức tạp thời gian:** Thường nhanh hơn A* hoặc BFS để tìm ra *một* lời giải (không nhất thiết tối ưu), nhưng độ phức tạp trong trường hợp xấu nhất vẫn có thể là O(b<sup>m</sup>).
-    *   **Độ phức tạp không gian (bộ nhớ):** Tương tự thời gian, thường ít hơn A* nhưng trong trường hợp xấu nhất cũng là O(b<sup>m</sup>).
-
 
 ### 2.3. Các Thuật Toán Tìm Kiếm Cục Bộ (Local Search)
 
